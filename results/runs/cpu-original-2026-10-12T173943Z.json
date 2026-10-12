@@ -1,0 +1,19 @@
+{
+  "variant": "cpu-original",
+  "date": "2026-10-12T17:39:43+00:00",
+  "health": {
+    "variant": "original",
+    "device": "cpu",
+    "threads": 1,
+    "load_s": 17.8,
+    "max_seq_length": 512
+  },
+  "first_request_s": 0.2769722489756532,
+  "query_client_s_median": 0.35665566800162196,
+  "query_server_s_median": 0.22716065899999904,
+  "query_client_s_max": 0.38950214901706204,
+  "docs_per_request": 32,
+  "doc_batch_client_s_median": 37.14589124947088,
+  "doc_batch_server_s_median": 36.743977877,
+  "docs_per_s_server": 0.870891009871593
+}

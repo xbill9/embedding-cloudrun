@@ -1,4 +1,12 @@
-16 passages, dim 768, server 2.59 s, wall 2.99 s
+16 passages, dim 768, server 2.49 s, wall 2.91 s
+0.805  Cloud Run scales a service to zero instances when no requests arrive, and starts one again on the next request.
+0.741  Request-based billing charges for CPU and memory only while a request is being processed.
+0.726  A GPU on Cloud Run is attached to an instance with at least 4 vCPU and 16 GiB of memory.
+16 passages, dim 768, server 2.41 s, wall 2.80 s
+0.850  Bread dough rises because yeast releases carbon dioxide that the gluten network traps.
+0.691  A sourdough starter is a mixture of flour and water fermented by wild yeast and lactic acid bacteria.
+0.633  The northern lights appear when charged particles from the sun excite gases in the upper atmosphere.
+16 passages, dim 768, server 2.46 s, wall 2.85 s
 0.749  The Rosetta Stone carries the same decree in hieroglyphic, Demotic and Ancient Greek scripts.
 0.634  Matryoshka embeddings can be truncated to a shorter prefix and still be used for retrieval.
 0.592  A hash map stores key-value pairs and finds a key in constant time on average.

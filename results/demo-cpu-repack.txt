@@ -1,12 +1,12 @@
-16 passages, dim 768, server 2.79 s, wall 3.18 s
-0.797  Cloud Run scales a service to zero instances when no requests arrive, and starts one again on the next request.
+16 passages, dim 768, server 2.93 s, wall 3.32 s
+0.802  Cloud Run scales a service to zero instances when no requests arrive, and starts one again on the next request.
 0.734  Request-based billing charges for CPU and memory only while a request is being processed.
-0.716  A GPU on Cloud Run is attached to an instance with at least 4 vCPU and 16 GiB of memory.
-16 passages, dim 768, server 2.32 s, wall 2.69 s
-0.859  Bread dough rises because yeast releases carbon dioxide that the gluten network traps.
-0.694  A sourdough starter is a mixture of flour and water fermented by wild yeast and lactic acid bacteria.
-0.636  The northern lights appear when charged particles from the sun excite gases in the upper atmosphere.
-16 passages, dim 768, server 2.36 s, wall 2.74 s
-0.750  The Rosetta Stone carries the same decree in hieroglyphic, Demotic and Ancient Greek scripts.
-0.641  Matryoshka embeddings can be truncated to a shorter prefix and still be used for retrieval.
-0.589  A hash map stores key-value pairs and finds a key in constant time on average.
+0.704  A GPU on Cloud Run is attached to an instance with at least 4 vCPU and 16 GiB of memory.
+16 passages, dim 768, server 2.59 s, wall 2.99 s
+0.853  Bread dough rises because yeast releases carbon dioxide that the gluten network traps.
+0.698  A sourdough starter is a mixture of flour and water fermented by wild yeast and lactic acid bacteria.
+0.638  The northern lights appear when charged particles from the sun excite gases in the upper atmosphere.
+16 passages, dim 768, server 2.63 s, wall 3.02 s
+0.745  The Rosetta Stone carries the same decree in hieroglyphic, Demotic and Ancient Greek scripts.
+0.631  Matryoshka embeddings can be truncated to a shorter prefix and still be used for retrieval.
+0.595  A hash map stores key-value pairs and finds a key in constant time on average.

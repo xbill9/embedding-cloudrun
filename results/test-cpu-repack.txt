@@ -1,4 +1,4 @@
-✅ health: {"variant": "repack", "device": "cpu", "threads": 1, "load_s": 13.83, "max_seq_length": 512}
+✅ health: {"variant": "repack", "device": "cpu", "threads": 1, "load_s": 9.03, "max_seq_length": 512}
 ✅ dim 128: length 128, norm 1.0000
 ✅ dim 256: length 256, norm 1.0000
 ✅ dim 512: length 512, norm 1.0000

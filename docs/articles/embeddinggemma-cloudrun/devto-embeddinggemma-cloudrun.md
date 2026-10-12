@@ -22,6 +22,16 @@ An L4 instance costs about ten times as much per hour as a 1 vCPU instance. So t
 
 ---
 
+#### Why Run Your Own Embeddings?
+
+Hosted decision APIs now sell work that embedding models have done for years. TypeSafe's Jev, launched on September 15, 2026, answers typed questions about a piece of text: pick one label from a list, place the text on a scale, or return the probability that a statement is true. It is priced at $0.042 per million input tokens, with access through a waitlist, OpenRouter and Vercel's AI Gateway.
+
+Ranking passages against a query and labelling text by its closest description are what an embedding model is built for. EmbeddingGemma 2 is an open model, so it can run in your own Google Cloud project, at Cloud Run's rates, with the text never leaving the project.
+
+This article prices that option per million input tokens, with the same unit Jev uses, and measures its speed and what it takes to deploy. Accuracy on the same items as Jev is not measured here; that head-to-head is the subject of a follow-up.
+
+---
+
 #### What is EmbeddingGemma 2?
 
 EmbeddingGemma 2 turns text into a 768-number vector, so that texts with similar meaning land close together. It also carries vision and audio encoders, which this project drops: only the text towers are loaded.
@@ -217,7 +227,7 @@ python3 scripts/test_service.py https://emb-cpu-repack-fgasxpwzoq-uc.a.run.app
 ```
 
 ```plaintext
-✅ health: {"variant": "repack", "device": "cpu", "threads": 1, "load_s": 13.83, "max_seq_length": 512}
+✅ health: {"variant": "repack", "device": "cpu", "threads": 1, "load_s": 9.03, "max_seq_length": 512}
 ✅ dim 128: length 128, norm 1.0000
 ✅ dim 256: length 256, norm 1.0000
 ✅ dim 512: length 512, norm 1.0000
@@ -229,9 +239,30 @@ python3 scripts/test_service.py https://emb-cpu-repack-fgasxpwzoq-uc.a.run.app
 9/9 checks passed
 ```
 
-The ranking check asks "How do plants make food from sunlight?" against a passage on photosynthesis, one on the Treaty of Westphalia and one on sourdough. The float32 and L4 services pass the same nine checks.
+The ranking check asks "How do plants make food from sunlight?" against a passage on photosynthesis, one on the Treaty of Westphalia and one on sourdough. The float32 and L4 services pass the same nine checks:
 
-L4_TEST_BLOCK
+```plaintext
+✅ health: {"variant": "original", "device": "cuda:0", "threads": 4, "load_s": 6.87, "max_seq_length": 512}
+✅ dim 128: length 128, norm 1.0000
+...
+9/9 checks passed
+```
+
+---
+
+#### 🔎 Tip: Normalize bf16 Embeddings in float32
+
+Sentence Transformers' `normalize_embeddings=True` normalizes in the model's own precision. On the L4 the model runs in bf16, and vectors that should be unit length came back with norms of 0.9975 at 128 dimensions and 1.0015 at 512, so a dot product used as a cosine is off by up to 0.25%. Loading the same weights in bf16 on a laptop CPU gives the same spread, 0.9977 to 1.0012.
+
+The server asks for the raw vectors and normalizes them in float32:
+
+```python
+e = model.encode(r.texts, prompt_name=r.prompt_name, truncate_dim=r.dim,
+                 convert_to_tensor=True, batch_size=32)
+e = torch.nn.functional.normalize(e.float(), dim=-1)
+```
+
+With that change every norm prints as 1.0000 on all three services.
 
 ---
 
@@ -244,37 +275,48 @@ python3 scripts/test_service.py $REPACK_URL --against $ORIGINAL_URL
 ```
 
 ```plaintext
-✅ agrees with --against: cosine per text min 0.9858 max 0.9981
+✅ agrees with --against: cosine per text min 0.9888 max 0.9978
 10/10 checks passed
 ```
 
-L4_AGREE_BLOCK
+The L4 in bf16 and the CPU in float32 run the same original weights, and agree almost exactly:
 
-A cosine of 0.986 to 0.998 per text says the vectors point the same way. Retrieval is the use that matters, so the repack was also scored on SciFact (300 queries over 5,183 scientific abstracts, 768 dimensions), with `repack/eval_scifact.py`:
+```shell
+python3 scripts/test_service.py $L4_URL --against $ORIGINAL_URL
+```
+
+```plaintext
+✅ agrees with --against: cosine per text min 0.9999 max 1.0000
+10/10 checks passed
+```
+
+The repack against the L4 measured 0.9858 to 0.9981. The repack's vectors shift slightly from one Cloud Run host to the next, because its int8 kernels depend on the host CPU, so the same check gives 0.986 to 0.998 across runs.
+
+A cosine near 0.99 says the vectors point the same way. Retrieval is the use that matters, so the repack was also scored on SciFact (300 queries over 5,183 scientific abstracts, 768 dimensions) with `repack/eval_scifact.py`:
 
 | weights | nDCG@10 | recall@10 | top 10 shared with float32 |
 |---|---|---|---|
-| float32 original | 0.854 | 0.944 | 100% |
-| int4 token table only | 0.850 | 0.939 | 92.7% |
-| repack (int8 + int4) | 0.836 | 0.926 | 85.5% |
+| 🥇 float32 original | 0.854 | 0.944 | 100% |
+| 🥈 int4 token table only | 0.850 | 0.939 | 92.7% |
+| 🥉 repack (int8 + int4) | 0.836 | 0.926 | 85.5% |
 
-The repack keeps 98% of the original's nDCG@10.
+The repack keeps 97.9% of the original's nDCG@10.
 
 ---
 
 #### Step 7 — A Simple Demo: Semantic Search
 
-`scripts/demo.py` embeds the sixteen passages in `docs/corpus.txt` as documents, the question as a search query, and prints the closest three:
+`scripts/demo.py` embeds the sixteen passages in `docs/corpus.txt` as documents and the question as a search query, then prints the closest three:
 
 ```shell
 python3 scripts/demo.py $REPACK_URL "Why does bread rise?"
 ```
 
 ```plaintext
-16 passages, dim 768, server 2.32 s, wall 2.69 s
-0.859  Bread dough rises because yeast releases carbon dioxide that the gluten network traps.
-0.694  A sourdough starter is a mixture of flour and water fermented by wild yeast and lactic acid bacteria.
-0.636  The northern lights appear when charged particles from the sun excite gases in the upper atmosphere.
+16 passages, dim 768, server 2.59 s, wall 2.99 s
+0.853  Bread dough rises because yeast releases carbon dioxide that the gluten network traps.
+0.698  A sourdough starter is a mixture of flour and water fermented by wild yeast and lactic acid bacteria.
+0.638  The northern lights appear when charged particles from the sun excite gases in the upper atmosphere.
 ```
 
 ```shell
@@ -282,73 +324,167 @@ python3 scripts/demo.py $REPACK_URL "Which old document helped decode Egyptian w
 ```
 
 ```plaintext
-16 passages, dim 768, server 2.36 s, wall 2.74 s
-0.750  The Rosetta Stone carries the same decree in hieroglyphic, Demotic and Ancient Greek scripts.
-0.641  Matryoshka embeddings can be truncated to a shorter prefix and still be used for retrieval.
-0.589  A hash map stores key-value pairs and finds a key in constant time on average.
+16 passages, dim 768, server 2.63 s, wall 3.02 s
+0.745  The Rosetta Stone carries the same decree in hieroglyphic, Demotic and Ancient Greek scripts.
+0.631  Matryoshka embeddings can be truncated to a shorter prefix and still be used for retrieval.
+0.595  A hash map stores key-value pairs and finds a key in constant time on average.
 ```
 
-The second question shares no keywords with its answer: "Rosetta Stone" and "hieroglyphic" appear only in the passage. On the L4 the same search comes back in L4_DEMO_SERVER of server time:
+The second question shares no keywords with its answer: "Rosetta Stone" and "hieroglyphic" appear only in the passage. The L4 returns the same ranking:
 
-L4_DEMO_BLOCK
+```shell
+python3 scripts/demo.py $L4_URL "Which old document helped decode Egyptian writing?"
+```
+
+```plaintext
+16 passages, dim 768, server 0.13 s, wall 0.42 s
+0.749  The Rosetta Stone carries the same decree in hieroglyphic, Demotic and Ancient Greek scripts.
+0.634  Matryoshka embeddings can be truncated to a shorter prefix and still be used for retrieval.
+0.592  A hash map stores key-value pairs and finds a key in constant time on average.
+```
+
+All three services put the same passage first for all three demo questions.
 
 ---
 
 #### Step 8 — Cold Start
 
-With `--min-instances 0`, the first request after an idle period starts an instance: Cloud Run pulls the image, starts the container, and the model loads before the port opens.
+With `--min-instances 0`, the first request after an idle period starts an instance: Cloud Run places it, pulls the image and starts the container, and the model loads before the port opens. `scripts/coldstart.sh` times that first request, then a second one, after 25 minutes with no traffic:
 
 ```shell
-curl -s -w '\nhttp=%{http_code} total_s=%{time_total}\n' $REPACK_URL/health
+scripts/coldstart.sh $L4_URL
 ```
 
-COLD_START_BLOCK
+```plaintext
+2026-10-12T17:46:53Z
+{"variant":"original","device":"cuda:0","threads":4,"load_s":4.78,"max_seq_length":512}
+http=200 total_s=17.271792
+second http=200 total_s=0.098748
+```
+
+`scripts/coldstart_summary.py` splits each first request into the server's model load and the rest:
+
+```plaintext
+file                                   variant    first request s  model load s  the rest s  warm s
+coldstart-cpu-original.txt             original              48.0          15.5        32.5    0.13
+coldstart-cpu-repack-2.txt             repack                58.4           9.5        48.9    0.11
+coldstart-cpu-repack.txt               repack                83.5          13.8        69.7    0.13
+coldstart-l4-original.txt              original              17.3           4.8        12.5    0.10
+```
+
+The model load is the smaller part on every service. The CPU services took 48 to 84 seconds to answer a first request, and the L4 took 17, with the largest image of the three. Cloud Run's request log for the float32 cold start shows the order: instance started at 17:08:08, first line from the container at 17:08:49, startup check passed at 17:08:56.
+
+A service that cannot wait that long can keep one instance warm with `--min-instances 1`; Cloud Run pricing lists how idle instances are billed.
 
 ---
 
 #### Step 9 — Benchmark
 
-`scripts/bench.py` sends 50 single-query requests, then 10 requests of 32 documents of about 135 tokens each, and records the server's own time for each:
+`scripts/bench.py` sends 50 single-query requests, then 10 requests of 32 documents of 141 tokens each (`scripts/count_tokens.py`, prompt included), and records the server's own time for each:
 
 ```shell
 python3 scripts/bench.py cpu-repack $REPACK_URL
 ```
 
-BENCH_BLOCK
+Each run is kept in `results/runs/`. A 1 vCPU instance lands on whichever host Cloud Run picks, so each variant was run three times, each on a new revision and so a new instance. `cost.py` reports the median run and the range:
+
+```plaintext
+variant        runs          query ms            docs/s  USD / 1M queries       USD / 1M docs
+cpu-original      3     251 (227-251)     0.9 (0.7-0.9)              8.93 39.05 (38.37-47.72)
+cpu-repack        3      121 (88-128)     1.1 (1.0-1.6)              3.91 25.87 (18.17-27.69)
+l4-original       3        56 (54-59) 333.1 (322.7-339.1)             16.27    0.87 (0.86-0.90)
+```
+
+`scripts/ratios.py` turns the medians into ratios:
+
+```plaintext
+L4 docs/s over cpu-repack docs/s: 297x
+cpu-original query time over cpu-repack query time: 2.08x
+cpu-repack docs/s over cpu-original docs/s: 1.29x
+SciFact nDCG@10, repack over float32: 97.9%
+```
+
+On the same 1 vCPU, the repack answers a query in half the time of float32 and embeds documents 1.29x as fast, in half the memory. The L4 embeds 297 times as many documents per second as the repack.
 
 ---
 
 #### Step 10 — Cost Analysis
 
-`scripts/fetch_prices.py` reads the Cloud Run rates from the Cloud Billing Catalog API into `prices.json`, and `scripts/cost.py` does all the arithmetic from those rates and the benchmark files:
+`scripts/fetch_prices.py` reads the Cloud Run rates from the Cloud Billing Catalog API into `prices.json`, and `scripts/cost.py` does all the arithmetic from those rates and the benchmark runs:
 
 ```shell
-python3 scripts/cost.py results/cpu-repack.json results/cpu-original.json results/l4-original.json
+python3 scripts/cost.py results/runs/*.json
 ```
 
-COST_BLOCK
+```plaintext
+prices fetched 2026-10-10, us-central1
 
-A per-request CPU service is charged its server seconds times its per-second rate, plus 0.40 USD per million requests after the first two million each month. The L4 rows assume an instance kept busy for every second it is up.
+variant        billing    USD/hour up
+cpu-repack     request         0.1044
+cpu-original   request         0.1224
+l4-original    instance        1.0465
+```
+
+A per-request CPU service is charged its server seconds times its per-second rate, plus 0.40 USD per million requests after the first two million each month. An idle CPU service costs nothing. The L4 is charged for every second its instance is up, so its per-document figures in Step 9 hold only while it is kept busy.
 
 ---
 
 #### And Price/Performance?
 
-An instance-billed L4 that is busy a fraction of its time costs that much more per document. `cost.py` prints the curve:
+An instance-billed L4 that is busy part of the time costs more per document in proportion. `cost.py` prints the curve against the repack:
 
-BREAKEVEN_BLOCK
+```plaintext
+L4 cost per 1M docs when the instance is busy part of the time it is up (vs cpu-repack, median runs):
+  busy  L4 USD / 1M docs   cpu-repack USD / 1M docs
+  100%              0.87                      25.87
+   50%              1.75                      25.87
+   25%              3.49                      25.87
+   10%              8.73                      25.87
+    5%             17.46                      25.87
+    1%             87.28                      25.87
+break-even: the L4 is cheaper per document while busy more than 3.4% of the time it is up
+```
+
+Per million input tokens, the unit Jev is priced in:
+
+```plaintext
+USD per 1M input tokens, documents of 141 tokens (median runs):
+cpu-original     0.2770
+cpu-repack       0.1835
+l4-original      0.0062  at 100% busy
+l4-original      0.0619  at 10% busy
+jev (hosted)     0.0420  list price
+l4-original matches Jev's price per input token while busy 14.7% of the time it is up; at 100% busy Jev costs 6.8x as much
+cpu-original costs 6.6x Jev's price per input token
+cpu-repack costs 4.4x Jev's price per input token
+```
+
+A busy L4 embeds text for a sixth of Jev's list price per input token. The 1 vCPU repack costs 4.4 times Jev's price per token, and nothing at all while idle.
 
 ---
 
 #### Compare and Contrast
 
-COMPARE_BLOCK
+| | cpu-repack | cpu-original | l4-original |
+|---|---|---|---|
+| Query, median | 🥈 121 ms | 🥉 251 ms | 🥇 56 ms |
+| Documents per second | 🥈 1.1 | 🥉 0.9 | 🥇 333 |
+| USD per 1M queries | 🥇 3.91 | 🥈 8.93 | 🥉 16.27 |
+| USD per 1M documents, busy | 🥈 25.87 | 🥉 39.05 | 🥇 0.87 |
+| Cost while idle | 🥇 none | 🥇 none | 🥉 1.05 USD per hour up |
+| Cold start | 🥉 58–84 s | 🥈 48 s | 🥇 17 s |
+| GPU quota needed | 🥇 no | 🥇 no | 🥉 yes |
+| SciFact nDCG@10 | 🥈 0.836 | 🥇 0.854 | not run; cosine 0.9999 to float32 |
 
 ---
 
 #### So, Which One?
 
-SO_WHICH_BLOCK
+For search queries arriving through the day, use the CPU repack. It is the cheapest per query, costs nothing between requests, needs no GPU quota, and keeps 97.9% of the original's retrieval score.
+
+For indexing a corpus, use the L4. It embeds 297 times as fast and costs 0.87 USD per million documents while busy; it pays for itself over the repack once it is busy more than 3.4% of the time it is up. Deploy it for the job and let it scale to zero afterwards.
+
+The float32 CPU service is the reference that the other two are checked against.
 
 ---
 
@@ -368,7 +504,18 @@ gcloud artifacts repositories delete embedding-cloudrun --location us-central1
 
 #### Summary
 
-SUMMARY_BLOCK
+The goal of this article was to deploy EmbeddingGemma 2 text embeddings to Cloud Run and price them against a hosted decision API. The key to the solution was one server and one Dockerfile for three services: an int8 repack on 1 vCPU with per-request billing, the float32 original on 1 vCPU as the reference, and the original in bf16 on an NVIDIA L4. The deployment results were:
+
+- 🟢 All three services pass the same nine checks, and the demo puts the same passage first on all three
+- 🟢 The repack matches float32 at a cosine of 0.986 to 0.998 per text and keeps 97.9% of its SciFact nDCG@10
+- 🟢 The repack answers a query in a median 121 ms on 1 vCPU, at 3.91 USD per million queries and nothing while idle
+- 🟢 The L4 embeds 333 documents per second, 0.87 USD per million documents while busy, 6.8 times below Jev's list price per input token
+- ⚠️ The L4 bills for every second it is up and is cheaper per document than the repack only while busy more than 3.4% of that time
+- ⚠️ Cold starts took 48 to 84 seconds on CPU and 17 on the L4
+- ⚠️ bf16 vectors need float32 normalization to come back unit length
+- ❌ No L4 quota without zonal redundancy in `us-central1`; the L4 ran in `us-east4`
+
+Scope: one Google Cloud project, CPU services in `us-central1` and the L4 in `us-east4`, one instance per service, Cloud Run prices from the Billing Catalog on 2026-10-10, measured 2026-10-11 and 2026-10-12. Three benchmark runs per variant, each on a new instance, with server-side timing, one document length (141 tokens) and one request at a time; the L4 was not tested with concurrent requests. Cold starts are single measurements. Jev's figure is its list price per input token; its accuracy against EmbeddingGemma 2 on the same items is not measured here.
 
 The strategy for deploying EmbeddingGemma 2 on Cloud Run was validated with an incremental step by step approach.
 
@@ -383,3 +530,5 @@ The strategy for deploying EmbeddingGemma 2 on Cloud Run was validated with an i
 - Cloud Run pricing: https://cloud.google.com/run/pricing
 - Sentence Transformers: https://sbert.net/
 - SciFact in BEIR: https://huggingface.co/datasets/mteb/scifact
+- TypeSafe Jev: https://typesafe.ai
+- Jev after eight days of independent tests: https://dev.to/aws-builders/jev-after-eight-days-of-independent-tests-level-with-mid-price-llms-behind-the-frontier-1c60

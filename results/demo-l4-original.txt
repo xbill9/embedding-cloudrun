@@ -1,12 +1,12 @@
-16 passages, dim 768, server 0.18 s, wall 0.48 s
-0.808  Cloud Run scales a service to zero instances when no requests arrive, and starts one again on the next request.
-0.743  Request-based billing charges for CPU and memory only while a request is being processed.
-0.729  A GPU on Cloud Run is attached to an instance with at least 4 vCPU and 16 GiB of memory.
-16 passages, dim 768, server 0.23 s, wall 0.55 s
-0.852  Bread dough rises because yeast releases carbon dioxide that the gluten network traps.
-0.693  A sourdough starter is a mixture of flour and water fermented by wild yeast and lactic acid bacteria.
-0.634  The northern lights appear when charged particles from the sun excite gases in the upper atmosphere.
-16 passages, dim 768, server 0.12 s, wall 0.47 s
+16 passages, dim 768, server 0.13 s, wall 0.46 s
+0.806  Cloud Run scales a service to zero instances when no requests arrive, and starts one again on the next request.
+0.740  Request-based billing charges for CPU and memory only while a request is being processed.
+0.726  A GPU on Cloud Run is attached to an instance with at least 4 vCPU and 16 GiB of memory.
+16 passages, dim 768, server 0.13 s, wall 0.43 s
+0.850  Bread dough rises because yeast releases carbon dioxide that the gluten network traps.
+0.691  A sourdough starter is a mixture of flour and water fermented by wild yeast and lactic acid bacteria.
+0.633  The northern lights appear when charged particles from the sun excite gases in the upper atmosphere.
+16 passages, dim 768, server 0.13 s, wall 0.42 s
 0.749  The Rosetta Stone carries the same decree in hieroglyphic, Demotic and Ancient Greek scripts.
 0.634  Matryoshka embeddings can be truncated to a shorter prefix and still be used for retrieval.
-0.593  A hash map stores key-value pairs and finds a key in constant time on average.
+0.592  A hash map stores key-value pairs and finds a key in constant time on average.

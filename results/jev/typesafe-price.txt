@@ -1,0 +1,4 @@
+Fetched 2026-10-12T18:16:59Z from https://typesafe.ai (homepage; /pricing returns 404)
+Price text on the page, tags stripped:
+$42 | Per Billion input tokens.
+Same figure per million input tokens: 0.042 USD

@@ -52,8 +52,10 @@ def embed(r: EmbedRequest):
         return {"error": "dim must be 128, 256, 512 or 768"}
     t = time.perf_counter()
     e = model.encode(r.texts, prompt_name=r.prompt_name, truncate_dim=r.dim,
-                     normalize_embeddings=True, batch_size=32)
-    return {"embeddings": e.tolist(), "seconds": time.perf_counter() - t}
+                     convert_to_tensor=True, batch_size=32)
+    # Normalize in float32: a bf16 model normalizes in bf16, leaving norms up to 0.25% off 1.
+    e = torch.nn.functional.normalize(e.float(), dim=-1)
+    return {"embeddings": e.cpu().tolist(), "seconds": time.perf_counter() - t}
 
 
 @app.get("/health")

@@ -1,4 +1,4 @@
-✅ health: {"variant": "original", "device": "cpu", "threads": 1, "load_s": 17.91, "max_seq_length": 512}
+✅ health: {"variant": "original", "device": "cpu", "threads": 1, "load_s": 20.22, "max_seq_length": 512}
 ✅ dim 128: length 128, norm 1.0000
 ✅ dim 256: length 256, norm 1.0000
 ✅ dim 512: length 512, norm 1.0000

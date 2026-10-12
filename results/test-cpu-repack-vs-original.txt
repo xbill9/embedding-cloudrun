@@ -1,4 +1,4 @@
-✅ health: {"variant": "repack", "device": "cpu", "threads": 1, "load_s": 11.42, "max_seq_length": 512}
+✅ health: {"variant": "repack", "device": "cpu", "threads": 1, "load_s": 9.03, "max_seq_length": 512}
 ✅ dim 128: length 128, norm 1.0000
 ✅ dim 256: length 256, norm 1.0000
 ✅ dim 512: length 512, norm 1.0000
@@ -6,6 +6,6 @@
 ✅ Matryoshka prefix: cosine(first 128 of 768, dim 128) = 1.00000
 ✅ rejects dim 100: {"error": "dim must be 128, 256, 512 or 768"}
 ✅ rejects empty texts: HTTP 422
-✅ ranking: scores 0.770, 0.501, 0.634
-✅ agrees with --against: cosine per text min 0.9858 max 0.9981
+✅ ranking: scores 0.776, 0.511, 0.642
+✅ agrees with --against: cosine per text min 0.9888 max 0.9978
 10/10 checks passed

@@ -40,7 +40,7 @@ The vectors are Matryoshka vectors. The first 128, 256 or 512 numbers of the 768
 
 ---
 
-#### Three Services, One Image
+#### Three Services, One Dockerfile
 
 | service | weights | instance | billing |
 |---|---|---|---|
@@ -48,7 +48,7 @@ The vectors are Matryoshka vectors. The first 128, 256 or 512 numbers of the 768
 | `emb-cpu-original` | text only, float32 | 1 vCPU, 4 GiB | per request |
 | `emb-l4-original` | text only, bf16 | 4 vCPU, 16 GiB, 1 L4 | per instance |
 
-The repack is built by `repack/repack_text_w8a8_emb4.py` in the repository: every Linear in the text model stored as int8 with one scale per output channel, and the 262,144-row token table as int4. On CPU the int8 Linears run on PyTorch's fbgemm kernels, so the L4 serves the original weights in bf16.
+The repack is built by `repack/repack_text_w8a8_emb4.py` in the repository: every Linear in the text model stored as int8 with one scale per output channel, and the 262,144-row token table as int4. The int8 Linears run on PyTorch's fbgemm kernels, which are CPU kernels, so the L4 serves the original weights in bf16.
 
 4 vCPU and 16 GiB is the smallest instance Cloud Run attaches an L4 to.
 
@@ -58,7 +58,7 @@ The repack is built by `repack/repack_text_w8a8_emb4.py` in the repository: ever
 
 The strategy for starting the deployment is an incremental step by step approach.
 
-First, the model files are staged and the server is checked on the local machine. Then each variant is built into an image, deployed, tested against its own contract and against the original weights, used for a search demo, timed, and priced from the Cloud Billing catalog.
+First, the model files are staged. Then each variant is built into an image, deployed, tested against its own contract and against the original weights, used for a search demo, timed, and priced from the Cloud Billing catalog.
 
 ---
 
@@ -116,8 +116,10 @@ def embed(r: EmbedRequest):
         return {"error": "dim must be 128, 256, 512 or 768"}
     t = time.perf_counter()
     e = model.encode(r.texts, prompt_name=r.prompt_name, truncate_dim=r.dim,
-                     normalize_embeddings=True, batch_size=32)
-    return {"embeddings": e.tolist(), "seconds": time.perf_counter() - t}
+                     convert_to_tensor=True, batch_size=32)
+    # Normalize in float32: a bf16 model normalizes in bf16, leaving norms up to 0.25% off 1.
+    e = torch.nn.functional.normalize(e.float(), dim=-1)
+    return {"embeddings": e.cpu().tolist(), "seconds": time.perf_counter() - t}
 ```
 
 Every reply carries `seconds`, the server's own time spent embedding. The benchmark and the cost model use that figure, so network distance between the client and the region does not enter the price.

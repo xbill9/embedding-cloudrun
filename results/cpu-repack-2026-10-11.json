@@ -1,0 +1,19 @@
+{
+  "variant": "cpu-repack",
+  "date": "2026-10-11T23:47:00+00:00",
+  "health": {
+    "variant": "repack",
+    "device": "cpu",
+    "threads": 1,
+    "load_s": 11.16,
+    "max_seq_length": 512
+  },
+  "first_request_s": 0.13243310002144426,
+  "query_client_s_median": 0.2482293264765758,
+  "query_server_s_median": 0.12087665050000851,
+  "query_client_s_max": 0.2819776170072146,
+  "docs_per_request": 32,
+  "doc_batch_client_s_median": 28.88904457350145,
+  "doc_batch_server_s_median": 28.529200365999998,
+  "docs_per_s_server": 1.1216577958538356
+}

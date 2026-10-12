@@ -1,0 +1,6 @@
+# Upload the models (git-ignored) but not the rest.
+.git/
+results/
+scripts/
+*.md
+__pycache__/

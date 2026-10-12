@@ -1,0 +1,19 @@
+{
+  "variant": "l4-original",
+  "date": "2026-10-10T17:53:58+00:00",
+  "health": {
+    "variant": "original",
+    "device": "cuda:0",
+    "threads": 4,
+    "load_s": 5.68,
+    "max_seq_length": 512
+  },
+  "first_request_s": 0.18919733603252098,
+  "query_client_s_median": 0.15823147003538907,
+  "query_server_s_median": 0.05598567100003038,
+  "query_client_s_max": 0.19523167301667854,
+  "docs_per_request": 32,
+  "doc_batch_client_s_median": 0.348638525523711,
+  "doc_batch_server_s_median": 0.09608437799994363,
+  "docs_per_s_server": 333.0406114511016
+}

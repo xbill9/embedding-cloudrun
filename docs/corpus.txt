@@ -1,0 +1,16 @@
+Cloud Run scales a service to zero instances when no requests arrive, and starts one again on the next request.
+A GPU on Cloud Run is attached to an instance with at least 4 vCPU and 16 GiB of memory.
+Request-based billing charges for CPU and memory only while a request is being processed.
+Matryoshka embeddings can be truncated to a shorter prefix and still be used for retrieval.
+Photosynthesis converts light energy, water and carbon dioxide into glucose and oxygen in chloroplasts.
+The mitochondria produce most of a cell's supply of adenosine triphosphate.
+A sourdough starter is a mixture of flour and water fermented by wild yeast and lactic acid bacteria.
+Bread dough rises because yeast releases carbon dioxide that the gluten network traps.
+The Treaty of Westphalia in 1648 ended the Thirty Years' War in the Holy Roman Empire.
+The Rosetta Stone carries the same decree in hieroglyphic, Demotic and Ancient Greek scripts.
+The northern lights appear when charged particles from the sun excite gases in the upper atmosphere.
+Jupiter's Great Red Spot is a storm larger than Earth that has lasted for centuries.
+A hash map stores key-value pairs and finds a key in constant time on average.
+Binary search finds an item in a sorted list by halving the search range at each step.
+Int8 quantization stores weights as 8-bit integers with a scale factor to cut memory and speed up matrix multiplies.
+The marathon distance of 42.195 km was fixed at the 1908 London Olympics.

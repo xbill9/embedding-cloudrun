@@ -1,0 +1,11 @@
+Deploying container to Cloud Run service [[1memb-l4-original[m] in project [[1mcomglitn[m] region [[1mus-central1[m]
+Deploying new service...
+failed
+Deployment failed
+ERROR: (gcloud.run.deploy) spec.template.metadata.annotations[autoscaling.knative.dev/maxScale]: You do not have quota for using GPUs without zonal redundancy. Learn more about GPU zonal redundancy: g.co/cloudrun/gpu-redundancy-help
+
+To request quota: g.co/cloudrun/gpu-quota
+
+real	0m4.148s
+user	0m1.172s
+sys	0m0.125s

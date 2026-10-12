@@ -1,0 +1,4 @@
+16 passages, dim 768, server 2.59 s, wall 2.99 s
+0.749  The Rosetta Stone carries the same decree in hieroglyphic, Demotic and Ancient Greek scripts.
+0.634  Matryoshka embeddings can be truncated to a shorter prefix and still be used for retrieval.
+0.592  A hash map stores key-value pairs and finds a key in constant time on average.

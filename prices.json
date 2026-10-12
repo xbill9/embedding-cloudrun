@@ -1,0 +1,81 @@
+{
+  "fetched": "2026-10-10",
+  "region": "us-central1",
+  "source": "services/152E-C115-5142",
+  "rates": {
+    "request_cpu_vcpu_s": {
+      "sku": "Services CPU (Request-based billing)",
+      "unit": "s",
+      "tiers": [
+        {
+          "from": 0,
+          "usd": 2.4e-05
+        }
+      ]
+    },
+    "request_mem_gib_s": {
+      "sku": "Services Memory (Request-based billing)",
+      "unit": "GiBy.s",
+      "tiers": [
+        {
+          "from": 0,
+          "usd": 2.5e-06
+        }
+      ]
+    },
+    "instance_cpu_vcpu_s": {
+      "sku": "Services CPU (Instance-based billing) in us-central1",
+      "unit": "s",
+      "tiers": [
+        {
+          "from": 0,
+          "usd": 1.8e-05
+        }
+      ]
+    },
+    "instance_mem_gib_s": {
+      "sku": "Services Memory (Instance-based billing) in us-central1",
+      "unit": "GiBy.s",
+      "tiers": [
+        {
+          "from": 0,
+          "usd": 2e-06
+        }
+      ]
+    },
+    "l4_no_zonal_redundancy_s": {
+      "sku": "NVIDIA L4 GPU with no zonal redundancy in us-central1",
+      "unit": "s",
+      "tiers": [
+        {
+          "from": 0,
+          "usd": 0.0001867
+        }
+      ]
+    },
+    "l4_zonal_redundancy_s": {
+      "sku": "NVIDIA L4 GPU with zonal redundancy in us-central1",
+      "unit": "s",
+      "tiers": [
+        {
+          "from": 0,
+          "usd": 0.0002909
+        }
+      ]
+    },
+    "requests": {
+      "sku": "Requests",
+      "unit": "count",
+      "tiers": [
+        {
+          "from": 0,
+          "usd": 0.0
+        },
+        {
+          "from": 2000000,
+          "usd": 4e-07
+        }
+      ]
+    }
+  }
+}

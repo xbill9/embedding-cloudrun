@@ -1,0 +1,21 @@
+prices fetched 2026-10-10, us-central1
+
+variant        billing    USD/hour up
+cpu-repack     request         0.1044
+cpu-original   request         0.1224
+l4-original    instance        1.0465
+
+variant         query ms  USD / 1M queries   docs/s  USD / 1M docs
+cpu-repack         115.4              3.75      1.2          24.94
+cpu-original       242.6              8.65      0.8          42.76
+l4-original         56.0             16.28    333.0           0.87
+
+L4 cost per 1M docs when the instance is busy part of the time it is up (vs cpu-repack):
+  busy  L4 USD / 1M docs   cpu-repack USD / 1M docs
+  100%              0.87                      24.94
+   50%              1.75                      24.94
+   25%              3.49                      24.94
+   10%              8.73                      24.94
+    5%             17.46                      24.94
+    1%             87.29                      24.94
+break-even: the L4 is cheaper per document while busy more than 3.5% of the time it is up

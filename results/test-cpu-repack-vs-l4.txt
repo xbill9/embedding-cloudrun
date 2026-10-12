@@ -1,0 +1,2 @@
+✅ agrees with --against: cosine per text min 0.9858 max 0.9981
+10/10 checks passed

@@ -1,0 +1,10 @@
+✅ health: {"variant": "original", "device": "cpu", "threads": 1, "load_s": 17.91, "max_seq_length": 512}
+✅ dim 128: length 128, norm 1.0000
+✅ dim 256: length 256, norm 1.0000
+✅ dim 512: length 512, norm 1.0000
+✅ dim 768: length 768, norm 1.0000
+✅ Matryoshka prefix: cosine(first 128 of 768, dim 128) = 1.00000
+✅ rejects dim 100: {"error": "dim must be 128, 256, 512 or 768"}
+✅ rejects empty texts: HTTP 422
+✅ ranking: scores 0.775, 0.497, 0.617
+9/9 checks passed

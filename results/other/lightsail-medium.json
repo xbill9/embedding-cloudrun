@@ -1,0 +1,19 @@
+{
+  "variant": "lightsail-medium",
+  "date": "2026-10-11T23:50:34+00:00",
+  "health": {
+    "variant": "repack",
+    "device": "cpu",
+    "threads": 1,
+    "load_s": 4.38,
+    "max_seq_length": 512
+  },
+  "first_request_s": 0.35944736801320687,
+  "query_client_s_median": 0.22406421299092472,
+  "query_server_s_median": 0.11351173000002746,
+  "query_client_s_max": 0.4077858430100605,
+  "docs_per_request": 32,
+  "doc_batch_client_s_median": 20.065266234014416,
+  "doc_batch_server_s_median": 19.679316954499996,
+  "docs_per_s_server": 1.6260726972377302
+}

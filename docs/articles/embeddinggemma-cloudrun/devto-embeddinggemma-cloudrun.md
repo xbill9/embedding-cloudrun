@@ -162,13 +162,13 @@ The output above is the float32 service, `scripts/deploy.sh cpu-original`, from 
 - `--concurrency 1` sends one request at a time to the single vCPU.
 - `TORCH_THREADS=1` matters because the container sees every core on the host while Cloud Run limits it to one vCPU by quota. PyTorch would otherwise start a thread per host core.
 
-Compressed in Artifact Registry, model included, the repack image is 636 MB and the float32 image 1.27 GB.
+Compressed in Artifact Registry, model included, the repack image is 636 MB and the float32 image 1270 MB.
 
 ---
 
 #### Step 4 — Deploy the L4 Service
 
-The CUDA image is 4.09 GB compressed in Artifact Registry, so `deploy.sh` builds it on Cloud Build instead of on local disk:
+The CUDA image is 4092 MB compressed in Artifact Registry, so `deploy.sh` builds it on Cloud Build instead of on local disk:
 
 ```shell
 SERVICE_REGION=us-east4 scripts/deploy.sh l4-original
@@ -252,7 +252,7 @@ The ranking check asks "How do plants make food from sunlight?" against a passag
 
 #### 🔎 Tip: Normalize bf16 Embeddings in float32
 
-Sentence Transformers' `normalize_embeddings=True` normalizes in the model's own precision. On the L4 the model runs in bf16, and vectors that should be unit length came back with norms of 0.9975 at 128 dimensions and 1.0015 at 512, so a dot product used as a cosine is off by up to 0.25%. Loading the same weights in bf16 on a laptop CPU gives the same spread, 0.9977 to 1.0012.
+Sentence Transformers' `normalize_embeddings=True` normalizes in the model's own precision. On the L4 the model runs in bf16, and vectors that should be unit length came back with norms of 0.9975 at 128 dimensions and 1.0015 at 512, so a dot product used as a cosine is off by the same amount. Loading the same weights in bf16 on a laptop CPU gives the same spread, 0.9977 to 1.0012.
 
 The server asks for the raw vectors and normalizes them in float32:
 

@@ -1,0 +1,18 @@
+bf16 on CPU, query 'How do plants make food from sunlight?' (the test_service.py query)
+dim 128: normalize_embeddings=True norm 0.9977; float32 normalize norm 1.000000
+dim 256: normalize_embeddings=True norm 0.9995; float32 normalize norm 1.000000
+dim 512: normalize_embeddings=True norm 1.0012; float32 normalize norm 1.000000
+dim 768: normalize_embeddings=True norm 1.0002; float32 normalize norm 1.000000
+largest distance from 1 with normalize_embeddings=True: 0.23%
+
+L4 service before the float32 fix, 2026-10-12 ~17:00 UTC, `python3 scripts/test_service.py $L4_URL`, output captured from the terminal:
+✅ health: {"variant": "original", "device": "cuda:0", "threads": 4, "load_s": 6.82, "max_seq_length": 512}
+❌ dim 128: length 128, norm 0.9975
+✅ dim 256: length 256, norm 1.0000
+❌ dim 512: length 512, norm 1.0015
+✅ dim 768: length 768, norm 1.0004
+✅ Matryoshka prefix: cosine(first 128 of 768, dim 128) = 1.00000
+✅ rejects dim 100: {"error": "dim must be 128, 256, 512 or 768"}
+✅ rejects empty texts: HTTP 422
+✅ ranking: scores 0.774, 0.496, 0.616
+7/9 checks passed

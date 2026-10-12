@@ -2,3 +2,5 @@ L4 docs/s over cpu-repack docs/s: 297x
 cpu-original query time over cpu-repack query time: 2.08x
 cpu-repack docs/s over cpu-original docs/s: 1.29x
 SciFact nDCG@10, repack over float32: 97.9%
+SciFact top 10 shared with float32, int4-table: 92.7%
+SciFact top 10 shared with float32, repack: 85.5%

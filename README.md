@@ -4,6 +4,8 @@
 
 An L4 instance costs about ten times as much per hour as a 1-vCPU instance (table below). Two numbers decide the comparison: whether the L4 embeds documents more than ten times as fast, and how much of the hour a GPU instance sits idle. Request-based CPU billing charges only while a request is in flight; a GPU service uses instance-based billing, which charges for the whole time the instance is up.
 
+Article: [EmbeddingGemma 2 on Cloud Run: an int8 CPU Service Against an NVIDIA L4](https://dev.to/gde/embeddinggemma-2-on-cloud-run-an-int8-cpu-service-against-an-nvidia-l4-15ac) (dev.to).
+
 ---
 
 #### The three services

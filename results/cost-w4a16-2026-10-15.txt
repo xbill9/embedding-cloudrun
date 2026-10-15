@@ -1,0 +1,18 @@
+prices fetched 2026-10-10, us-central1
+
+variant        billing    USD/hour up
+cpu-repack     request         0.1044
+cpu-w4a16      request         0.1134
+cpu-original   request         0.1224
+l4-original    instance        1.0465
+
+variant        runs          query ms            docs/s  USD / 1M queries       USD / 1M docs
+cpu-repack        3     133 (132-135)     1.0 (1.0-1.1)              4.25 27.67 (26.16-28.55)
+cpu-w4a16         3     201 (190-216)     0.8 (0.8-0.8)              6.74 38.09 (37.20-39.43)
+
+USD per 1M input tokens, documents of 141 tokens (median runs):
+cpu-repack       0.1963
+cpu-w4a16        0.2701
+jev (hosted)     0.0420  list price
+cpu-repack costs 4.7x Jev's price per input token
+cpu-w4a16 costs 6.4x Jev's price per input token

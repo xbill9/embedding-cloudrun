@@ -18,6 +18,7 @@ import sys
 
 SHAPES = {  # must match scripts/deploy.sh
     "cpu-repack": {"billing": "request", "vcpu": 1, "gib": 2, "l4": 0},
+    "cpu-w4a16": {"billing": "request", "vcpu": 1, "gib": 3, "l4": 0},
     "cpu-original": {"billing": "request", "vcpu": 1, "gib": 4, "l4": 0},
     "l4-original": {"billing": "instance", "vcpu": 4, "gib": 16, "l4": 1},
     # Lightsail container service, power "medium": flat monthly price from

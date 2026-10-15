@@ -1,5 +1,7 @@
-file                                   variant    first request s  model load s  the rest s  warm s
-coldstart-cpu-original.txt             original              48.0          15.5        32.5    0.13
-coldstart-cpu-repack-2.txt             repack                58.4           9.5        48.9    0.11
-coldstart-cpu-repack.txt               repack                83.5          13.8        69.7    0.13
-coldstart-l4-original.txt              original              17.3           4.8        12.5    0.10
+file                                   variant       first request s  model load s  the rest s  warm s
+coldstart-cpu-original.txt             original                 48.0          15.5        32.5    0.13
+coldstart-cpu-repack-2.txt             repack                   58.4           9.5        48.9    0.11
+coldstart-cpu-repack-3.txt             repack                  134.8          11.4       123.3    0.13
+coldstart-cpu-repack.txt               repack                   83.5          13.8        69.7    0.13
+coldstart-cpu-w4a16.txt                repack-w4a16            164.9           9.2       155.7    0.12
+coldstart-l4-original.txt              original                 17.3           4.8        12.5    0.10

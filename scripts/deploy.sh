@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 # Build, push and deploy one variant. Deploying creates a billable Cloud Run service.
-#   scripts/deploy.sh cpu-repack | cpu-original | l4-original
+#   scripts/deploy.sh cpu-repack | cpu-w4a16 | cpu-original | l4-original
 #
 #   cpu-repack    1 vCPU, 2 GiB, request-based billing   int8/int4 repack via fbgemm
+#   cpu-w4a16     1 vCPU, 3 GiB, request-based billing   int4 repack, Linears dequantized to float32
+#                 at load (2,127 MiB peak RSS locally: load plus one 32-document batch)
 #   cpu-original  1 vCPU, 4 GiB, request-based billing   float32 original (2.6 GB peak RSS locally)
 #   l4-original   4 vCPU, 16 GiB, 1 L4, instance-based   bf16 original; 4 vCPU / 16 GiB is the L4 minimum
 #
@@ -10,7 +12,7 @@
 # idle service costs nothing and a stuck benchmark cannot fan out. Take it down with scripts/down.sh.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-VARIANT=${1:?cpu-repack | cpu-original | l4-original}
+VARIANT=${1:?cpu-repack | cpu-w4a16 | cpu-original | l4-original}
 PROJECT=${PROJECT:-$(gcloud config get-value project 2>/dev/null)}
 REGION=${REGION:-us-central1}                 # Artifact Registry and Cloud Build
 SERVICE_REGION=${SERVICE_REGION:-$REGION}      # where the service runs; GPU quota is per region
@@ -21,6 +23,8 @@ IMAGE=$REGION-docker.pkg.dev/$PROJECT/$REPO/embeddinggemma2-$VARIANT:latest
 case $VARIANT in
   cpu-repack)   MODEL=repack;   TORCH_INDEX=https://download.pytorch.org/whl/cpu
                 FLAGS=(--cpu 1 --memory 2Gi --concurrency 1 --cpu-throttling --set-env-vars TORCH_THREADS=1) ;;
+  cpu-w4a16)    MODEL=repack-w4a16; TORCH_INDEX=https://download.pytorch.org/whl/cpu
+                FLAGS=(--cpu 1 --memory 3Gi --concurrency 1 --cpu-throttling --set-env-vars TORCH_THREADS=1) ;;
   cpu-original) MODEL=original; TORCH_INDEX=https://download.pytorch.org/whl/cpu
                 FLAGS=(--cpu 1 --memory 4Gi --concurrency 1 --cpu-throttling --set-env-vars TORCH_THREADS=1) ;;
   l4-original)  MODEL=original; TORCH_INDEX=https://download.pytorch.org/whl/cu130

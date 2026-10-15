@@ -1,6 +1,7 @@
 """EmbeddingGemma 2 behind one HTTP endpoint, for Cloud Run on CPU or an L4.
 
 MODEL_VARIANT=repack    the int8/int4 text-only repack through cpu_load.py (CPU only)
+MODEL_VARIANT=repack-w4a16  the int4 (W4A16) text-only repack through cpu_load.py (CPU only)
 MODEL_VARIANT=original  google/embeddinggemma-2, text only: bf16 on a GPU, float32 on CPU
 
 POST /embed    {"texts": [...], "prompt_name": "SearchQuery" | "Document" | null, "dim": 768}
@@ -24,7 +25,7 @@ if os.environ.get("TORCH_THREADS"):
     torch.set_num_threads(int(os.environ["TORCH_THREADS"]))
 
 t0 = time.perf_counter()
-if VARIANT == "repack":
+if VARIANT in ("repack", "repack-w4a16"):
     from cpu_load import load
     model = load(MODEL_DIR)
 elif VARIANT == "original":
@@ -33,7 +34,7 @@ elif VARIANT == "original":
                                 config_kwargs={"vision_config": None, "audio_config": None},
                                 model_kwargs={"dtype": torch.bfloat16 if cuda else torch.float32})
 else:
-    raise SystemExit(f"MODEL_VARIANT must be repack or original, not {VARIANT!r}")
+    raise SystemExit(f"MODEL_VARIANT must be repack, repack-w4a16 or original, not {VARIANT!r}")
 model.max_seq_length = int(os.environ.get("MAX_SEQ_LENGTH", "512"))
 LOAD_S = time.perf_counter() - t0
 

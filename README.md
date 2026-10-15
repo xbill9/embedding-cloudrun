@@ -13,6 +13,7 @@ Article: [EmbeddingGemma 2 on Cloud Run: an int8 CPU Service Against an NVIDIA L
 | service | model | instance | billing |
 |---|---|---|---|
 | `emb-cpu-repack` | text-only repack: int8 Linears, int4 embedding table, 203 MiB | 1 vCPU, 2 GiB | request-based |
+| `emb-cpu-w4a16` | text-only repack: int4 Linears (dequantized to float32 at load), int4 embedding table, 146 MiB | 1 vCPU, 3 GiB | request-based |
 | `emb-cpu-original` | original, text towers only, float32 | 1 vCPU, 4 GiB | request-based |
 | `emb-l4-original` | original, text towers only, bf16 | 4 vCPU, 16 GiB, 1 L4, no zonal redundancy | instance-based |
 
@@ -37,6 +38,16 @@ From `results/scifact.json` (300 queries, 5,183 documents, 12 threads). Validati
 - `w4a16-verify.txt`: `repack_text_w4a16_emb4.py verify` rereads both checkpoints; every source text tensor is present, copied tensors are byte-identical, and each packed tensor's error recomputed from disk matches the report (int4 Linears 8.5–10.5% relative error against bf16; int8 Linears are 0.8–1.1%).
 - `w4a16-compressed-tensors.txt`: `repack/check_compressed_tensors.py` decodes all 218 packed tensors with compressed-tensors 0.19.0's `PackedQuantizationCompressor`; they match `cpu_load.unpack_int4` exactly.
 - `w4a16-cosine.txt`: mean cosine to float32 over `docs/corpus.txt`, 0.984 for documents and 0.986 for queries (w8a8: 0.993, 0.995).
+
+On Cloud Run (`scripts/deploy.sh cpu-w4a16`), against the int8 repack redeployed the same day, three runs each, alternating (`results/runs/*2026-10-15*`, `results/cost-w4a16-2026-10-15.txt`):
+
+```
+variant        runs          query ms            docs/s  USD / 1M queries       USD / 1M docs
+cpu-repack        3     133 (132-135)     1.0 (1.0-1.1)              4.25 27.67 (26.16-28.55)
+cpu-w4a16         3     201 (190-216)     0.8 (0.8-0.8)              6.74 38.09 (37.20-39.43)
+```
+
+Queries take 1.52x as long and the int8 repack embeds documents 1.27x as fast (`results/ratios.txt`): the int4 Linears run in float32. The service needs 3 GiB, against 2 GiB for the int8 repack: loading plus one 32-document batch peaks at 2,127 MiB locally (int8: 1,856 MiB). The image is 580 MB compressed against 636 MB (`results/images.txt`). One cold start each on 2026-10-15: 164.9 s for w4a16, 134.8 s for the int8 repack, whose earlier cold starts took 58.4 s and 83.5 s (`results/coldstart.txt`). It passes `scripts/test_service.py` against the int8 service (cosine per text 0.971 to 0.993, `results/test-cpu-w4a16-vs-repack.txt`).
 
 Not tested: loading in vLLM. Transformers' `from_pretrained` with the compressed-tensors integration fails on this build at the quantized embedding table (`EmbeddingGemma2TextScaledWordEmbedding` has no `weight` during weight init); the w8a8 build was not tried.
 

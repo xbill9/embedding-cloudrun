@@ -1,0 +1,4 @@
+2026-10-15T16:56:38Z
+{"variant":"repack-w4a16","device":"cpu","threads":1,"load_s":9.21,"max_seq_length":512}
+http=200 total_s=164.949821
+second http=200 total_s=0.117781

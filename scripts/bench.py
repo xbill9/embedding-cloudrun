@@ -2,7 +2,7 @@
 
     python3 scripts/bench.py VARIANT URL [--queries 50] [--batches 10] [--out results/VARIANT.json]
 
-VARIANT is the deploy.sh name (cpu-repack, cpu-original, l4-original); cost.py reads it to know
+VARIANT is the deploy.sh name (cpu-repack, cpu-w4a16, cpu-original, l4-original); cost.py reads it to know
 the instance shape. Each run is also kept as results/runs/VARIANT-DATE.json. The services are public, so requests carry no credentials. Documents are 32 copies of a
 fixed ~135-token paragraph per request, so every variant embeds the same tokens.
 """

@@ -1,0 +1,19 @@
+{
+  "variant": "cpu-w4a16",
+  "date": "2026-10-15T16:25:46+00:00",
+  "health": {
+    "variant": "repack-w4a16",
+    "device": "cpu",
+    "threads": 1,
+    "load_s": 10.03,
+    "max_seq_length": 512
+  },
+  "first_request_s": 0.16897914899982425,
+  "query_client_s_median": 0.3224629329997697,
+  "query_server_s_median": 0.1900665164999964,
+  "query_client_s_max": 0.4724087429995052,
+  "docs_per_request": 32,
+  "doc_batch_client_s_median": 39.087276921000466,
+  "doc_batch_server_s_median": 38.6824143424999,
+  "docs_per_s_server": 0.8272492951620651
+}

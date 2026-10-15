@@ -1,5 +1,5 @@
 # One image definition for every variant.
-#   MODEL=repack|original        which directory under models/ is baked in (scripts/prepare_models.sh)
+#   MODEL=repack|repack-w4a16|original        which directory under models/ is baked in (scripts/prepare_models.sh)
 #   TORCH_INDEX                  https://download.pytorch.org/whl/cpu for CPU, .../whl/cu130 for the L4
 FROM python:3.12-slim
 ARG TORCH_INDEX=https://download.pytorch.org/whl/cpu

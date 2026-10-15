@@ -6,3 +6,4 @@ SciFact nDCG@10, w4a16 over float32: 97.6%
 SciFact top 10 shared with float32, int4-table: 92.7%
 SciFact top 10 shared with float32, repack: 85.5%
 SciFact top 10 shared with float32, w4a16: 80.7%
+2026-10-15, 3 runs each: cpu-w4a16 query time over cpu-repack: 1.52x; cpu-repack docs/s over cpu-w4a16: 1.27x

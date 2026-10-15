@@ -1,0 +1,4 @@
+2026-10-15T16:59:23Z
+{"variant":"repack","device":"cpu","threads":1,"load_s":11.45,"max_seq_length":512}
+http=200 total_s=134.785324
+second http=200 total_s=0.132954

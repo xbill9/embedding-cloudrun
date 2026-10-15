@@ -3,3 +3,5 @@ cpu-repack unknown 0 MB compressed, 1 layers
 cpu-original amd64 1270 MB compressed, 9 layers
 cpu-original unknown 0 MB compressed, 1 layers
 l4-original amd64 4092 MB compressed, 8 layers
+cpu-w4a16 amd64 580 MB compressed, 9 layers
+cpu-w4a16 unknown 0 MB compressed, 1 layers

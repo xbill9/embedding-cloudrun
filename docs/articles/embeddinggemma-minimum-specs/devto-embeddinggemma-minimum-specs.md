@@ -3,7 +3,7 @@ title: "EmbeddingGemma 2 on Cloud Run: Minimum Specs, and When an NVIDIA L4 Pays
 published: false
 description: "How small a Cloud Run instance EmbeddingGemma 2 fits in, whether an int4 repack shrinks it further, and how many documents a burst needs before an NVIDIA L4 costs less than a 1 vCPU int8 service."
 tags: googlecloud, gemma, cloudrun, machinelearning
-cover_image: https://raw.githubusercontent.com/xbill9/embedding-cloudrun/main/docs/articles/embeddinggemma-minimum-specs/devto-cover.b5b4afd8.jpg
+cover_image: https://raw.githubusercontent.com/xbill9/embedding-cloudrun/main/docs/articles/embeddinggemma-minimum-specs/devto-cover.d94c2bc5.jpg
 ---
 
 This article provides a step by step sizing guide for EmbeddingGemma 2 text embeddings on Google Cloud Run. It measures the smallest CPU instance the model fits in, tests an int4 repack of the weights, and prices a burst of work on a 1 vCPU service against the same burst on an NVIDIA L4 GPU.

@@ -6,6 +6,8 @@ An L4 instance costs about ten times as much per hour as a 1-vCPU instance (tabl
 
 Article: [EmbeddingGemma 2 on Cloud Run: an int8 CPU Service Against an NVIDIA L4](https://dev.to/gde/embeddinggemma-2-on-cloud-run-an-int8-cpu-service-against-an-nvidia-l4-15ac) (dev.to).
 
+Follow-up: [EmbeddingGemma 2 on Cloud Run: Minimum Specs, and When an NVIDIA L4 Pays for Itself](https://dev.to/gde/embeddinggemma-2-on-cloud-run-minimum-specs-and-when-an-nvidia-l4-pays-for-itself-5c1k) (dev.to, [Medium](https://xbill999.medium.com/embeddinggemma-2-on-cloud-run-minimum-specs-and-when-an-nvidia-l4-pays-for-itself-6757788a394e), [Substack](https://xbill9.substack.com/p/embeddinggemma-2-on-cloud-run-minimum)).
+
 ---
 
 #### The three services

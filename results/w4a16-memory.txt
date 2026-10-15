@@ -1,0 +1,10 @@
+Peak process memory, local, 1 thread, load then one 32-document batch at batch 32, 2026-10-15
+(captured output of the in-session check; RSS and peak in MiB)
+models/repack-w4a16
+imports: rss 532 peak 531
+loaded: rss 1503 peak 1632
+after batch: rss 1573 peak 2127
+models/repack
+imports: rss 532 peak 531
+loaded: rss 1242 peak 1364
+after batch: rss 1295 peak 1856

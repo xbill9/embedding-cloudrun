@@ -20,6 +20,24 @@ Article: [EmbeddingGemma 2 on Cloud Run: an int8 CPU Service Against an NVIDIA L
 
 The repack script and its retrieval eval are in `repack/`; `app/cpu_load.py` loads the result.
 
+#### W4A16 repack
+
+`repack/repack_text_w4a16_emb4.py` builds the same text-only model with every Linear at int4 (group 32 along the input dimension, bf16 scales, float activations), in the `-w4a16-ct` layout of the Gemma 4 builds; the embedding table is the same int4 table. `app/cpu_load.py` loads it too, dequantizing the Linears to float32 at load. The model has no QAT export, so every group is rounded from bf16.
+
+| build | `model.safetensors` | SciFact nDCG@10 | recall@10 | top 10 shared with float32 |
+|---|---|---|---|---|
+| float32 original (text towers) | 1.4 GB (all towers) | 0.8542 | 0.9437 | 100% |
+| w8a8 int8, int4 table | 203 MiB | 0.8358 | 0.9259 | 85.5% |
+| w4a16, int4 table | 146 MiB | 0.8336 | 0.9342 | 80.7% |
+
+From `results/scifact.json` (300 queries, 5,183 documents, 12 threads). Validation, each in `results/`:
+
+- `w4a16-verify.txt`: `repack_text_w4a16_emb4.py verify` rereads both checkpoints; every source text tensor is present, copied tensors are byte-identical, and each packed tensor's error recomputed from disk matches the report (int4 Linears 8.5–10.5% relative error against bf16; int8 Linears are 0.8–1.1%).
+- `w4a16-compressed-tensors.txt`: `repack/check_compressed_tensors.py` decodes all 218 packed tensors with compressed-tensors 0.19.0's `PackedQuantizationCompressor`; they match `cpu_load.unpack_int4` exactly.
+- `w4a16-cosine.txt`: mean cosine to float32 over `docs/corpus.txt`, 0.984 for documents and 0.986 for queries (w8a8: 0.993, 0.995).
+
+Not tested: loading in vLLM. Transformers' `from_pretrained` with the compressed-tensors integration fails on this build at the quantized embedding table (`EmbeddingGemma2TextScaledWordEmbedding` has no `weight` during weight init); the w8a8 build was not tried.
+
 ---
 
 #### Prices

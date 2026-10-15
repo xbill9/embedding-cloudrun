@@ -1,0 +1,73 @@
+{
+  "source": "/home/xbill/embedding-cloudrun/models/original",
+  "dropped_params": 473369344,
+  "error_vs_bf16": {
+    "embed_tokens (int4)": {
+      "tensors": 1,
+      "rel_err_min": 0.08954768038973616,
+      "rel_err_max": 0.08954768038973616,
+      "rel_err_mean": 0.08954768038973616
+    },
+    "layers.mlp.down_proj (int4)": {
+      "tensors": 24,
+      "rel_err_min": 0.08965926375006296,
+      "rel_err_max": 0.09617852558835809,
+      "rel_err_mean": 0.09112451988305158
+    },
+    "layers.mlp.gate_proj (int4)": {
+      "tensors": 24,
+      "rel_err_min": 0.08803445700141656,
+      "rel_err_max": 0.08934804911339178,
+      "rel_err_mean": 0.08860522631757323
+    },
+    "layers.mlp.up_proj (int4)": {
+      "tensors": 24,
+      "rel_err_min": 0.08864926854549758,
+      "rel_err_max": 0.09027191699791708,
+      "rel_err_mean": 0.08929345845156689
+    },
+    "layers.ple_block.per_layer_input_gate (int4)": {
+      "tensors": 24,
+      "rel_err_min": 0.08911233210814179,
+      "rel_err_max": 0.10369618042851134,
+      "rel_err_mean": 0.0957759224108703
+    },
+    "layers.ple_block.per_layer_projection (int4)": {
+      "tensors": 24,
+      "rel_err_min": 0.09035204598220921,
+      "rel_err_max": 0.10474501658537812,
+      "rel_err_mean": 0.09624449224265945
+    },
+    "layers.self_attn.k_proj (int4)": {
+      "tensors": 24,
+      "rel_err_min": 0.08865442650565625,
+      "rel_err_max": 0.0993325458623883,
+      "rel_err_mean": 0.09145303800500464
+    },
+    "layers.self_attn.o_proj (int4)": {
+      "tensors": 24,
+      "rel_err_min": 0.08457317947450041,
+      "rel_err_max": 0.09108624717290281,
+      "rel_err_mean": 0.0888928318655331
+    },
+    "layers.self_attn.q_proj (int4)": {
+      "tensors": 24,
+      "rel_err_min": 0.08812611617728082,
+      "rel_err_max": 0.09154699894572284,
+      "rel_err_mean": 0.08919257088287097
+    },
+    "layers.self_attn.v_proj (int4)": {
+      "tensors": 24,
+      "rel_err_min": 0.08828743823453927,
+      "rel_err_max": 0.09315595810445032,
+      "rel_err_mean": 0.09011562573737014
+    },
+    "ple.per_layer_model_projection (int4)": {
+      "tensors": 1,
+      "rel_err_min": 0.0915742466605686,
+      "rel_err_max": 0.0915742466605686,
+      "rel_err_mean": 0.0915742466605686
+    }
+  },
+  "total_bytes": 153225048
+}

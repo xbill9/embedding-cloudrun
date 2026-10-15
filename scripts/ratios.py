@@ -19,5 +19,6 @@ print(f"L4 docs/s over cpu-repack docs/s: {docs['l4-original'] / docs['cpu-repac
 print(f"cpu-original query time over cpu-repack query time: {query['cpu-original'] / query['cpu-repack']:.2f}x")
 print(f"cpu-repack docs/s over cpu-original docs/s: {docs['cpu-repack'] / docs['cpu-original']:.2f}x")
 print(f"SciFact nDCG@10, repack over float32: {sci['repack']['ndcg@10'] / sci['float32']['ndcg@10']:.1%}")
-for name in ("int4-table", "repack"):
+print(f"SciFact nDCG@10, w4a16 over float32: {sci['w4a16']['ndcg@10'] / sci['float32']['ndcg@10']:.1%}")
+for name in ("int4-table", "repack", "w4a16"):
     print(f"SciFact top 10 shared with float32, {name}: {sci[name]['top10_overlap_with_float32']:.1%}")

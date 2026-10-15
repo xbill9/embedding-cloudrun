@@ -1,6 +1,6 @@
 """Retrieval quality of this repack against google/embeddinggemma-2, on SciFact (BEIR test split).
 
-    python3 eval_scifact.py DATA_DIR REPACK_DIR --original ORIGINAL_DIR [--variants a,b] [--out results.json]
+    python3 eval_scifact.py DATA_DIR REPACK_DIR --original ORIGINAL_DIR [--w4a16 W4A16_DIR] [--variants a,b] [--out results.json]
 
 DATA_DIR holds corpus.jsonl, queries.jsonl and test.tsv from huggingface.co/datasets/mteb/scifact.
 Every variant embeds the same 300 queries ("SearchQuery" prompt) and 5,183 documents
@@ -9,7 +9,8 @@ Every variant embeds the same 300 queries ("SearchQuery" prompt) and 5,183 docum
 Variants (names for --variants): float32 (the original), repack (cpu_load defaults: int8
 Linears except the float-input ones, int4 table), repack-all-int8 (every Linear int8 per-tensor
 activations, the first loader), int8-linears (repack-all-int8 with the original table), int4-table
-(the original with only the int4 table). nDCG@10 and recall@10 are computed here, and each
+(the original with only the int4 table), w4a16 (the repack_text_w4a16_emb4.py build in --w4a16).
+nDCG@10 and recall@10 are computed here, and each
 variant's top 10 is kept in the output; once float32 is in the file, every variant also gets how
 many of each query's top 10 match float32's. Results merge into an existing --out file.
 """
@@ -66,6 +67,7 @@ def main():
     p.add_argument("data")
     p.add_argument("repack")
     p.add_argument("--original", required=True)
+    p.add_argument("--w4a16")
     p.add_argument("--variants", default="float32,repack,int4-table")
     p.add_argument("--out", default="eval_scifact.json")
     a = p.parse_args()
@@ -93,7 +95,7 @@ def main():
 
     variants = {"float32": original, "repack": lambda: load(a.repack),
                 "repack-all-int8": lambda: load(a.repack, float_inputs=()),
-                "int8-linears": int8_linears, "int4-table": int4_table}
+                "int8-linears": int8_linears, "int4-table": int4_table, "w4a16": lambda: load(a.w4a16)}
     out = json.load(open(a.out)) if os.path.exists(a.out) else {"queries": len(queries), "documents": len(corpus),
                                                                  "variants": {}}
     for name in a.variants.split(","):

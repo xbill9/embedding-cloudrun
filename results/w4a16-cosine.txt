@@ -1,0 +1,5 @@
+loader == numpy unpack: True
+document w8a8   cosine to float32 over 16 texts: mean 0.9934 min 0.9882
+document w4a16  cosine to float32 over 16 texts: mean 0.9839 min 0.9765
+query    w8a8   cosine to float32 over 16 texts: mean 0.9945 min 0.9912
+query    w4a16  cosine to float32 over 16 texts: mean 0.9863 min 0.9740

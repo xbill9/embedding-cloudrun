@@ -49,6 +49,12 @@ class Int4Embedding(torch.nn.Module):
         return q * s * self.embed_scale
 
 
+def unpack_int4(packed, scale, shape):
+    """Group-32 int4 `weight_packed` / `weight_scale` / `weight_shape` -> float32 [rows, cols]."""
+    q = ((packed.unsqueeze(-1) >> _SHIFTS) & 0xF).flatten(-2).to(torch.float32) - 8.0
+    return q * scale.to(torch.float32).repeat_interleave(32, dim=-1)
+
+
 class Int8Linear(torch.nn.Module):
     def __init__(self, q, scale, reduce_range=True):
         super().__init__()
@@ -63,12 +69,15 @@ class Int8Linear(torch.nn.Module):
 
 
 class DequantLinear(torch.nn.Module):
-    """int8 weight times its per-channel scale, dequantized once; float32 activations."""
+    """int8 weight times its per-channel scale (or an int4 weight, see unpack_int4), dequantized
+    once; float32 activations."""
 
-    def __init__(self, q, scale):
+    def __init__(self, q, scale, weight=None):
         super().__init__()
-        self.register_buffer("weight", q.to(torch.float32) * scale.to(torch.float32), persistent=False)
-        self.out_features, self.in_features = q.shape
+        if weight is None:
+            weight = q.to(torch.float32) * scale.to(torch.float32)
+        self.register_buffer("weight", weight, persistent=False)
+        self.out_features, self.in_features = weight.shape
 
     def forward(self, x):
         return torch.nn.functional.linear(x, self.weight)
@@ -86,7 +95,11 @@ def build_model(path, config, reduce_range=True, float_inputs=FLOAT_INPUTS):
     with no_init_weights():
         model = AutoModel.from_config(config, dtype=torch.bfloat16)
     for name in [n for n, m in model.named_modules() if isinstance(m, torch.nn.Linear)]:
-        if name + ".weight_scale" in sd:
+        if name + ".weight_packed" in sd:  # W4A16
+            w = unpack_int4(sd.pop(name + ".weight_packed"), sd.pop(name + ".weight_scale"),
+                            sd.pop(name + ".weight_shape"))
+            _set(model, name, DequantLinear(None, None, w))
+        elif name + ".weight_scale" in sd:
             q, scale = sd.pop(name + ".weight"), sd.pop(name + ".weight_scale")
             float_in = name.rsplit(".", 1)[-1] in float_inputs
             _set(model, name, DequantLinear(q, scale) if float_in else Int8Linear(q, scale, reduce_range))

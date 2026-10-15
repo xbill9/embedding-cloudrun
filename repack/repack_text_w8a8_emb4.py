@@ -54,18 +54,27 @@ def quantize_int8(w_u16):
     return q, scale, float(err)
 
 
-def quantize_int4(w_u16, chunk=8192):
-    """bf16 bits [rows, cols] -> (packed int32 [rows, cols/8], fp16 [rows, cols/32], rel error)."""
+def _round_scale(s, tag):
+    if tag == "F16":
+        return s.astype(np.float16).astype(np.float32)
+    return bf16_to_f32(f32_to_bf16(s.astype(np.float32)))
+
+
+def quantize_int4(w_u16, chunk=8192, scale_tag="F16"):
+    """bf16 bits [rows, cols] -> (packed int32 [rows, cols/8], scales [rows, cols/32], rel error).
+
+    Scales are fp16 (scale_tag "F16") or bf16 bits ("BF16"); each candidate step is rounded to the
+    stored dtype before its error is measured, so the levels match the scale that is written."""
     rows, cols = w_u16.shape
     packed = np.empty((rows, cols // 8), dtype=np.int32)
-    scales = np.empty((rows, cols // GROUP), dtype=np.float16)
+    scales = np.empty((rows, cols // GROUP), dtype=np.float16 if scale_tag == "F16" else np.uint16)
     se = sw = 0.0
     for r0 in range(0, rows, chunk):
         g = bf16_to_f32(np.asarray(w_u16[r0:r0 + chunk])).reshape(-1, cols // GROUP, GROUP)
         amax = np.abs(g).max(axis=-1, keepdims=True)
         best_s = best_e = None
         for m in STEPS:
-            s = np.where(amax > 0, amax / m, 1.0).astype(np.float16).astype(np.float32)
+            s = _round_scale(np.where(amax > 0, amax / m, 1.0), scale_tag)
             e = ((np.clip(np.rint(g / s), -8, 7) * s - g) ** 2).sum(axis=-1, keepdims=True)
             if best_s is None:
                 best_s, best_e = s, e
@@ -77,8 +86,26 @@ def quantize_int4(w_u16, chunk=8192):
         sw += float((g ** 2).sum())
         n = g.shape[0]
         packed[r0:r0 + n] = pack(q.astype(np.int8).reshape(n, cols))
-        scales[r0:r0 + n] = best_s.reshape(n, cols // GROUP).astype(np.float16)
+        best_s = best_s.reshape(n, cols // GROUP)
+        scales[r0:r0 + n] = best_s.astype(np.float16) if scale_tag == "F16" else f32_to_bf16(best_s)
     return packed, scales, (se / sw) ** 0.5
+
+
+def copy_text_files(src, out):
+    """Sentence Transformers files, text modality only; the source model card as ORIGINAL_README.md."""
+    for f in os.listdir(src):
+        path = os.path.join(src, f)
+        if f in ("config.json", "README.md") \
+                or f.endswith(".safetensors"):
+            continue
+        if os.path.isdir(path):
+            shutil.copytree(path, os.path.join(out, f), dirs_exist_ok=True)
+        else:
+            shutil.copy2(path, out)
+    sb = json.load(open(os.path.join(src, "sentence_bert_config.json")))
+    sb["modality_config"] = {"text": sb["modality_config"]["text"]}
+    json.dump(sb, open(os.path.join(out, "sentence_bert_config.json"), "w"), indent=2)
+    shutil.copy2(os.path.join(src, "README.md"), os.path.join(out, "ORIGINAL_README.md"))
 
 
 def main():
@@ -137,20 +164,7 @@ def main():
     }
     json.dump(cfg, open(os.path.join(a.out, "config.json"), "w"), indent=2)
 
-    # Sentence Transformers files, text modality only.
-    for f in os.listdir(a.src):
-        path = os.path.join(a.src, f)
-        if f in ("config.json", "README.md") \
-                or f.endswith(".safetensors"):
-            continue
-        if os.path.isdir(path):
-            shutil.copytree(path, os.path.join(a.out, f), dirs_exist_ok=True)
-        else:
-            shutil.copy2(path, a.out)
-    sb = json.load(open(os.path.join(a.src, "sentence_bert_config.json")))
-    sb["modality_config"] = {"text": sb["modality_config"]["text"]}
-    json.dump(sb, open(os.path.join(a.out, "sentence_bert_config.json"), "w"), indent=2)
-    shutil.copy2(os.path.join(a.src, "README.md"), os.path.join(a.out, "ORIGINAL_README.md"))
+    copy_text_files(a.src, a.out)
 
     report = {k: {"tensors": len(v), "rel_err_min": min(v), "rel_err_max": max(v), "rel_err_mean": sum(v) / len(v)}
               for k, v in sorted(errs.items())}

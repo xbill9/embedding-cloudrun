@@ -20,6 +20,8 @@ Article: [EmbeddingGemma 2 on Cloud Run: an int8 CPU Service Against an NVIDIA L
 
 The repack script and its retrieval eval are in `repack/`; `app/cpu_load.py` loads the result.
 
+Both builds are on Hugging Face, each with `cpu_load.py`: [`xbill9/embeddinggemma-2-w8a8-ct-text-emb4`](https://huggingface.co/xbill9/embeddinggemma-2-w8a8-ct-text-emb4) (the one the CPU service runs) and [`xbill9/embeddinggemma-2-w4a16-ct-text-emb4`](https://huggingface.co/xbill9/embeddinggemma-2-w4a16-ct-text-emb4).
+
 #### W4A16 repack
 
 `repack/repack_text_w4a16_emb4.py` builds the same text-only model with every Linear at int4 (group 32 along the input dimension, bf16 scales, float activations), in the `-w4a16-ct` layout of the Gemma 4 builds; the embedding table is the same int4 table. `app/cpu_load.py` loads it too, dequantizing the Linears to float32 at load. The model has no QAT export, so every group is rounded from bf16.

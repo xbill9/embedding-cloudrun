@@ -1,0 +1,409 @@
+Creating temporary archive of 54 file(s) totalling 1.8 GiB before compression.
+Uploading tarball of [.] to [gs://comglitn_cloudbuild/source/1792085872.057052-3aa43bef871749f291697d7876ce5c3f.tgz]
+Created [https://cloudbuild.googleapis.com/v1/projects/comglitn/locations/us-central1/builds/c4488714-b751-4618-a9dd-8facd51d4126].
+Logs are available at [ https://console.cloud.google.com/cloud-build/builds;region=us-central1/c4488714-b751-4618-a9dd-8facd51d4126?project=1056842563084 ].
+Waiting for build to complete. Polling interval: 1 second(s).
+----------------------------- REMOTE BUILD OUTPUT ------------------------------
+starting build "c4488714-b751-4618-a9dd-8facd51d4126" using release legacy
+
+FETCHSOURCE
+Fetching storage object: gs://comglitn_cloudbuild/source/1792085872.057052-3aa43bef871749f291697d7876ce5c3f.tgz#1792086653635048
+Copying gs://comglitn_cloudbuild/source/1792085872.057052-3aa43bef871749f291697d7876ce5c3f.tgz#1792086653635048...
+/ [0 files][    0.0 B/  1.1 GiB]                                                -- [0 files][ 32.5 MiB/  1.1 GiB]                                                \|| [0 files][ 88.2 MiB/  1.1 GiB]                                                // [0 files][146.2 MiB/  1.1 GiB]                                                -\\ [0 files][203.9 MiB/  1.1 GiB]                                                |// [0 files][258.6 MiB/  1.1 GiB]                                                -- [0 files][314.5 MiB/  1.1 GiB]                                                \|| [0 files][376.2 MiB/  1.1 GiB]                                                /-- [0 files][434.7 MiB/  1.1 GiB]                                                \\ [0 files][504.0 MiB/  1.1 GiB]                                                |// [0 files][563.3 MiB/  1.1 GiB]                                                -\\ [0 files][623.1 MiB/  1.1 GiB]   61.6 MiB/s                                   || [0 files][683.2 MiB/  1.1 GiB]   61.3 MiB/s                                   /-- [0 files][742.5 MiB/  1.1 GiB]   61.3 MiB/s                                   \|| [0 files][802.8 MiB/  1.1 GiB]   59.6 MiB/s                                   // [0 files][862.4 MiB/  1.1 GiB]   59.7 MiB/s                                   -\\ [0 files][918.1 MiB/  1.1 GiB]   58.9 MiB/s                                   |// [0 files][978.7 MiB/  1.1 GiB]   59.0 MiB/s                                   -- [0 files][  1.0 GiB/  1.1 GiB]   59.1 MiB/s                                   \|| [0 files][  1.1 GiB/  1.1 GiB]   61.0 MiB/s                                   // [1 files][  1.1 GiB/  1.1 GiB]   58.9 MiB/s                                   
+Operation completed over 1 objects/1.1 GiB.
+BUILD
+Already have image (with digest): gcr.io/cloud-builders/docker
+Sending build context to Docker daemon  1.952GB
+Step 1/10 : FROM python:3.12-slim
+3.12-slim: Pulling from library/python
+ecc510c1e359: Pulling fs layer
+75b6a36c64a1: Pulling fs layer
+6912e23eb445: Pulling fs layer
+bbc5a1223747: Pulling fs layer
+75b6a36c64a1: Verifying Checksum
+75b6a36c64a1: Download complete
+6912e23eb445: Verifying Checksum
+6912e23eb445: Download complete
+ecc510c1e359: Verifying Checksum
+ecc510c1e359: Download complete
+ecc510c1e359: Pull complete
+75b6a36c64a1: Pull complete
+6912e23eb445: Pull complete
+bbc5a1223747: Pull complete
+Digest: sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1
+Status: Downloaded newer image for python:3.12-slim
+ ---> df18428df8a0
+Step 2/10 : ARG TORCH_INDEX=https://download.pytorch.org/whl/cpu
+ ---> Running in ad971d72b17e
+Removing intermediate container ad971d72b17e
+ ---> 407972e3edf1
+Step 3/10 : ARG MODEL=repack
+ ---> Running in 526bfdd76c80
+Removing intermediate container 526bfdd76c80
+ ---> 424a5f3f7a77
+Step 4/10 : RUN pip install --no-cache-dir torch==2.14.1 --index-url ${TORCH_INDEX}  && pip install --no-cache-dir transformers==5.19.0 sentence-transformers==6.1.0         safetensors fastapi uvicorn
+ ---> Running in 29273b105af0
+Looking in indexes: https://download.pytorch.org/whl/cu130
+Collecting torch==2.14.1
+  Downloading https://download-r2.pytorch.org/whl/cu130/torch-2.14.1%2Bcu130-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (37 kB)
+Collecting filelock (from torch==2.14.1)
+  Downloading filelock-3.32.3-py3-none-any.whl.metadata (2.0 kB)
+Collecting typing-extensions>=4.10.0 (from torch==2.14.1)
+  Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting setuptools>=77.0.3 (from torch==2.14.1)
+  Downloading https://download.pytorch.org/whl/setuptools-78.1.0-py3-none-any.whl.metadata (6.6 kB)
+Collecting sympy>=1.13.3 (from torch==2.14.1)
+  Downloading sympy-1.14.0-py3-none-any.whl.metadata (12 kB)
+Collecting networkx>=2.5.1 (from torch==2.14.1)
+  Downloading networkx-3.6.1-py3-none-any.whl.metadata (6.8 kB)
+Collecting jinja2 (from torch==2.14.1)
+  Downloading https://download.pytorch.org/whl/jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting fsspec>=0.8.5 (from torch==2.14.1)
+  Downloading fsspec-2026.7.0-py3-none-any.whl.metadata (10 kB)
+Collecting cuda-toolkit==13.0.3 (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch==2.14.1)
+  Downloading https://pypi.nvidia.com/cuda-toolkit/cuda_toolkit-13.0.3.0-py2.py3-none-any.whl (2.5 kB)
+Collecting cuda-bindings<14,>=13.0.3 (from torch==2.14.1)
+  Downloading cuda_bindings-13.3.1-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (2.5 kB)
+Collecting nvidia-cudnn-cu13==9.24.0.43 (from torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-cudnn-cu13/nvidia_cudnn_cu13-9.24.0.43-py3-none-manylinux_2_27_x86_64.whl (553.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 553.1/553.1 MB 163.6 MB/s eta 0:00:00
+Collecting nvidia-cusparselt-cu13==0.8.1 (from torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-cusparselt-cu13/nvidia_cusparselt_cu13-0.8.1-py3-none-manylinux2014_x86_64.whl (170.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 170.1/170.1 MB 191.1 MB/s eta 0:00:00
+Collecting nvidia-nccl-cu13==2.30.7 (from torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-nccl-cu13/nvidia_nccl_cu13-2.30.7-py3-none-manylinux_2_18_x86_64.whl (216.0 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 216.0/216.0 MB 169.4 MB/s eta 0:00:00
+Collecting nvidia-nvshmem-cu13==3.4.5 (from torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-nvshmem-cu13/nvidia_nvshmem_cu13-3.4.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (60.4 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.4/60.4 MB 246.5 MB/s eta 0:00:00
+Collecting triton~=3.8.0 (from torch==2.14.1)
+  Downloading https://download-r2.pytorch.org/whl/triton-3.8.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (978 bytes)
+Collecting nvidia-cublas==13.1.1.3.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-cublas/nvidia_cublas-13.1.1.3-py3-none-manylinux_2_27_x86_64.whl (423.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 423.1/423.1 MB 176.0 MB/s eta 0:00:00
+Collecting nvidia-cuda-nvrtc==13.0.88.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-cuda-nvrtc/nvidia_cuda_nvrtc-13.0.88-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl (90.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 90.2/90.2 MB 212.1 MB/s eta 0:00:00
+Collecting nvidia-cuda-runtime==13.0.96.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-cuda-runtime/nvidia_cuda_runtime-13.0.96-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (2.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 354.9 MB/s eta 0:00:00
+Collecting nvidia-cufft==12.0.0.61.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-cufft/nvidia_cufft-12.0.0.61-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (214.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 214.1/214.1 MB 210.4 MB/s eta 0:00:00
+Collecting nvidia-nvjitlink<14,>=13.0.88 (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-nvjitlink/nvidia_nvjitlink-13.3.33-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl (40.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.7/40.7 MB 118.6 MB/s eta 0:00:00
+Collecting nvidia-cufile==1.15.1.6.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-cufile/nvidia_cufile-1.15.1.6-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (1.2 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 385.8 MB/s eta 0:00:00
+Collecting nvidia-cuda-cupti==13.0.85.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-cuda-cupti/nvidia_cuda_cupti-13.0.85-py3-none-manylinux_2_25_x86_64.whl (10.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.7/10.7 MB 145.1 MB/s eta 0:00:00
+Collecting nvidia-curand==10.4.0.35.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-curand/nvidia_curand-10.4.0.35-py3-none-manylinux_2_27_x86_64.whl (59.5 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.5/59.5 MB 204.8 MB/s eta 0:00:00
+Collecting nvidia-cusolver==12.0.4.66.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-cusolver/nvidia_cusolver-12.0.4.66-py3-none-manylinux_2_27_x86_64.whl (200.9 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 200.9/200.9 MB 206.4 MB/s eta 0:00:00
+Collecting nvidia-cusparse==12.6.3.3.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-cusparse/nvidia_cusparse-12.6.3.3-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (145.9 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 145.9/145.9 MB 204.9 MB/s eta 0:00:00
+Collecting nvidia-nvtx==13.0.85.* (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch==2.14.1)
+  Downloading https://pypi.nvidia.com/nvidia-nvtx/nvidia_nvtx-13.0.85-py3-none-manylinux1_x86_64.manylinux_2_5_x86_64.whl (148 kB)
+Collecting cuda-pathfinder>=1.4.2 (from cuda-bindings<14,>=13.0.3->torch==2.14.1)
+  Downloading cuda_pathfinder-1.6.0-py3-none-any.whl.metadata (1.9 kB)
+Collecting mpmath<1.4,>=1.1.0 (from sympy>=1.13.3->torch==2.14.1)
+  Downloading mpmath-1.3.0-py3-none-any.whl.metadata (8.6 kB)
+Collecting MarkupSafe>=2.0 (from jinja2->torch==2.14.1)
+  Downloading https://download.pytorch.org/whl/markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+Downloading https://download-r2.pytorch.org/whl/cu130/torch-2.14.1%2Bcu130-cp312-cp312-manylinux_2_28_x86_64.whl (554.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 554.6/554.6 MB 161.6 MB/s eta 0:00:00
+Downloading cuda_bindings-13.3.1-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (6.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.7/6.7 MB 114.0 MB/s eta 0:00:00
+Downloading fsspec-2026.7.0-py3-none-any.whl (206 kB)
+Downloading networkx-3.6.1-py3-none-any.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 79.2 MB/s eta 0:00:00
+Downloading https://download.pytorch.org/whl/setuptools-78.1.0-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 43.7 MB/s eta 0:00:00
+Downloading sympy-1.14.0-py3-none-any.whl (6.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.3/6.3 MB 129.8 MB/s eta 0:00:00
+Downloading https://download-r2.pytorch.org/whl/triton-3.8.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (246.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 246.8/246.8 MB 139.1 MB/s eta 0:00:00
+Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Downloading filelock-3.32.3-py3-none-any.whl (98 kB)
+Downloading https://download.pytorch.org/whl/jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading cuda_pathfinder-1.6.0-py3-none-any.whl (54 kB)
+Downloading https://download.pytorch.org/whl/markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+Downloading mpmath-1.3.0-py3-none-any.whl (536 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 536.2/536.2 kB 341.7 MB/s eta 0:00:00
+Installing collected packages: nvidia-cusparselt-cu13, mpmath, cuda-toolkit, typing-extensions, triton, sympy, setuptools, nvidia-nvtx, nvidia-nvshmem-cu13, nvidia-nvjitlink, nvidia-nccl-cu13, nvidia-curand, nvidia-cufile, nvidia-cuda-runtime, nvidia-cuda-nvrtc, nvidia-cuda-cupti, networkx, MarkupSafe, fsspec, filelock, cuda-pathfinder, nvidia-cusparse, nvidia-cufft, nvidia-cublas, jinja2, cuda-bindings, nvidia-cusolver, nvidia-cudnn-cu13, torch
+Successfully installed MarkupSafe-3.0.3 cuda-bindings-13.3.1 cuda-pathfinder-1.6.0 cuda-toolkit-13.0.3.0 filelock-3.32.3 fsspec-2026.7.0 jinja2-3.1.6 mpmath-1.3.0 networkx-3.6.1 nvidia-cublas-13.1.1.3 nvidia-cuda-cupti-13.0.85 nvidia-cuda-nvrtc-13.0.88 nvidia-cuda-runtime-13.0.96 nvidia-cudnn-cu13-9.24.0.43 nvidia-cufft-12.0.0.61 nvidia-cufile-1.15.1.6 nvidia-curand-10.4.0.35 nvidia-cusolver-12.0.4.66 nvidia-cusparse-12.6.3.3 nvidia-cusparselt-cu13-0.8.1 nvidia-nccl-cu13-2.30.7 nvidia-nvjitlink-13.3.33 nvidia-nvshmem-cu13-3.4.5 nvidia-nvtx-13.0.85 setuptools-78.1.0 sympy-1.14.0 torch-2.14.1+cu130 triton-3.8.0 typing-extensions-4.16.0
+[91mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[0mCollecting transformers==5.19.0
+  Downloading transformers-5.19.0-py3-none-any.whl.metadata (32 kB)
+Collecting sentence-transformers==6.1.0
+  Downloading sentence_transformers-6.1.0-py3-none-any.whl.metadata (20 kB)
+Collecting safetensors
+  Downloading safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.2 kB)
+Collecting fastapi
+  Downloading fastapi-0.143.2-py3-none-any.whl.metadata (26 kB)
+Collecting uvicorn
+  Downloading uvicorn-0.54.0-py3-none-any.whl.metadata (6.6 kB)
+Collecting huggingface-hub<3.0,>=1.31.0 (from transformers==5.19.0)
+  Downloading huggingface_hub-2.2.0-py3-none-any.whl.metadata (16 kB)
+Collecting numpy>=1.17 (from transformers==5.19.0)
+  Downloading numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+Collecting packaging>=20.0 (from transformers==5.19.0)
+  Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting pyyaml>=5.1 (from transformers==5.19.0)
+  Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+Collecting regex>=2025.10.22 (from transformers==5.19.0)
+  Downloading regex-2026.9.29-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (40 kB)
+Collecting tokenizers<0.24.0,>=0.23.1 (from transformers==5.19.0)
+  Downloading tokenizers-0.23.3-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (9.8 kB)
+Collecting typer (from transformers==5.19.0)
+  Downloading typer-0.27.3-py3-none-any.whl.metadata (16 kB)
+Collecting tqdm>=4.60 (from transformers==5.19.0)
+  Downloading tqdm-4.70.1-py3-none-any.whl.metadata (57 kB)
+Collecting huggingface-hub<3.0,>=1.31.0 (from transformers==5.19.0)
+  Downloading huggingface_hub-1.33.0-py3-none-any.whl.metadata (16 kB)
+Requirement already satisfied: torch>=2.2 in /usr/local/lib/python3.12/site-packages (from sentence-transformers==6.1.0) (2.14.1+cu130)
+Collecting scikit-learn>=1.1.0 (from sentence-transformers==6.1.0)
+  Downloading scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.3 kB)
+Collecting scipy>=1.0.0 (from sentence-transformers==6.1.0)
+  Downloading scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
+Requirement already satisfied: typing_extensions>=4.10.0 in /usr/local/lib/python3.12/site-packages (from sentence-transformers==6.1.0) (4.16.0)
+Collecting starlette>=0.46.0 (from fastapi)
+  Downloading starlette-1.8.0-py3-none-any.whl.metadata (6.6 kB)
+Collecting pydantic>=2.9.0 (from fastapi)
+  Downloading pydantic-2.14.1-py3-none-any.whl.metadata (133 kB)
+Collecting typing-inspection>=0.4.2 (from fastapi)
+  Downloading typing_inspection-0.4.4-py3-none-any.whl.metadata (2.6 kB)
+Collecting annotated-doc>=0.0.2 (from fastapi)
+  Downloading annotated_doc-0.0.5-py3-none-any.whl.metadata (6.5 kB)
+Collecting opentelemetry-api>=1.44.0 (from fastapi)
+  Downloading opentelemetry_api-1.45.1-py3-none-any.whl.metadata (1.4 kB)
+Collecting click>=7.0 (from uvicorn)
+  Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+Collecting h11>=0.8 (from uvicorn)
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Requirement already satisfied: filelock>=3.10.0 in /usr/local/lib/python3.12/site-packages (from huggingface-hub<3.0,>=1.31.0->transformers==5.19.0) (3.32.3)
+Requirement already satisfied: fsspec>=2023.5.0 in /usr/local/lib/python3.12/site-packages (from huggingface-hub<3.0,>=1.31.0->transformers==5.19.0) (2026.7.0)
+Collecting hf-xet<2.0.0,>=1.6.0 (from huggingface-hub<3.0,>=1.31.0->transformers==5.19.0)
+  Downloading hf_xet-1.7.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (4.9 kB)
+Collecting httpx<1,>=0.23.0 (from huggingface-hub<3.0,>=1.31.0->transformers==5.19.0)
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting annotated-types>=0.6.0 (from pydantic>=2.9.0->fastapi)
+  Downloading annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.50.1 (from pydantic>=2.9.0->fastapi)
+  Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.5 kB)
+Collecting joblib>=1.4.0 (from scikit-learn>=1.1.0->sentence-transformers==6.1.0)
+  Downloading joblib-1.6.0-py3-none-any.whl.metadata (6.5 kB)
+Collecting narwhals>=2.0.1 (from scikit-learn>=1.1.0->sentence-transformers==6.1.0)
+  Downloading narwhals-2.27.1-py3-none-any.whl.metadata (15 kB)
+Collecting threadpoolctl>=3.5.0 (from scikit-learn>=1.1.0->sentence-transformers==6.1.0)
+  Downloading threadpoolctl-3.7.0-py3-none-any.whl.metadata (24 kB)
+Collecting anyio<5,>=4.0.0 (from starlette>=0.46.0->fastapi)
+  Downloading anyio-4.15.1-py3-none-any.whl.metadata (4.7 kB)
+Requirement already satisfied: setuptools>=77.0.3 in /usr/local/lib/python3.12/site-packages (from torch>=2.2->sentence-transformers==6.1.0) (78.1.0)
+Requirement already satisfied: sympy>=1.13.3 in /usr/local/lib/python3.12/site-packages (from torch>=2.2->sentence-transformers==6.1.0) (1.14.0)
+Requirement already satisfied: networkx>=2.5.1 in /usr/local/lib/python3.12/site-packages (from torch>=2.2->sentence-transformers==6.1.0) (3.6.1)
+Requirement already satisfied: jinja2 in /usr/local/lib/python3.12/site-packages (from torch>=2.2->sentence-transformers==6.1.0) (3.1.6)
+Requirement already satisfied: cuda-toolkit==13.0.3 in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->sentence-transformers==6.1.0) (13.0.3.0)
+Requirement already satisfied: cuda-bindings<14,>=13.0.3 in /usr/local/lib/python3.12/site-packages (from torch>=2.2->sentence-transformers==6.1.0) (13.3.1)
+Requirement already satisfied: nvidia-cudnn-cu13==9.24.0.43 in /usr/local/lib/python3.12/site-packages (from torch>=2.2->sentence-transformers==6.1.0) (9.24.0.43)
+Requirement already satisfied: nvidia-cusparselt-cu13==0.8.1 in /usr/local/lib/python3.12/site-packages (from torch>=2.2->sentence-transformers==6.1.0) (0.8.1)
+Requirement already satisfied: nvidia-nccl-cu13==2.30.7 in /usr/local/lib/python3.12/site-packages (from torch>=2.2->sentence-transformers==6.1.0) (2.30.7)
+Requirement already satisfied: nvidia-nvshmem-cu13==3.4.5 in /usr/local/lib/python3.12/site-packages (from torch>=2.2->sentence-transformers==6.1.0) (3.4.5)
+Requirement already satisfied: triton~=3.8.0 in /usr/local/lib/python3.12/site-packages (from torch>=2.2->sentence-transformers==6.1.0) (3.8.0)
+Requirement already satisfied: nvidia-cublas==13.1.1.3.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->sentence-transformers==6.1.0) (13.1.1.3)
+Requirement already satisfied: nvidia-cuda-nvrtc==13.0.88.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->sentence-transformers==6.1.0) (13.0.88)
+Requirement already satisfied: nvidia-cuda-runtime==13.0.96.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->sentence-transformers==6.1.0) (13.0.96)
+Requirement already satisfied: nvidia-cufft==12.0.0.61.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->sentence-transformers==6.1.0) (12.0.0.61)
+Requirement already satisfied: nvidia-nvjitlink<14,>=13.0.88 in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->sentence-transformers==6.1.0) (13.3.33)
+Requirement already satisfied: nvidia-cufile==1.15.1.6.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->sentence-transformers==6.1.0) (1.15.1.6)
+Requirement already satisfied: nvidia-cuda-cupti==13.0.85.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->sentence-transformers==6.1.0) (13.0.85)
+Requirement already satisfied: nvidia-curand==10.4.0.35.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->sentence-transformers==6.1.0) (10.4.0.35)
+Requirement already satisfied: nvidia-cusolver==12.0.4.66.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->sentence-transformers==6.1.0) (12.0.4.66)
+Requirement already satisfied: nvidia-cusparse==12.6.3.3.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->sentence-transformers==6.1.0) (12.6.3.3)
+Requirement already satisfied: nvidia-nvtx==13.0.85.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.2->sentence-transformers==6.1.0) (13.0.85)
+Collecting shellingham>=1.3.0 (from typer->transformers==5.19.0)
+  Downloading shellingham-1.5.4-py2.py3-none-any.whl.metadata (3.5 kB)
+Collecting rich>=13.8.0 (from typer->transformers==5.19.0)
+  Downloading rich-15.0.0-py3-none-any.whl.metadata (18 kB)
+Collecting idna>=2.8 (from anyio<5,>=4.0.0->starlette>=0.46.0->fastapi)
+  Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+Requirement already satisfied: cuda-pathfinder>=1.4.2 in /usr/local/lib/python3.12/site-packages (from cuda-bindings<14,>=13.0.3->torch>=2.2->sentence-transformers==6.1.0) (1.6.0)
+Collecting certifi (from httpx<1,>=0.23.0->huggingface-hub<3.0,>=1.31.0->transformers==5.19.0)
+  Downloading certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+Collecting httpcore==1.* (from httpx<1,>=0.23.0->huggingface-hub<3.0,>=1.31.0->transformers==5.19.0)
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting cloudpickle>=3.0 (from joblib>=1.4.0->scikit-learn>=1.1.0->sentence-transformers==6.1.0)
+  Downloading cloudpickle-3.1.2-py3-none-any.whl.metadata (7.1 kB)
+Collecting markdown-it-py>=2.2.0 (from rich>=13.8.0->typer->transformers==5.19.0)
+  Downloading markdown_it_py-4.2.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich>=13.8.0->typer->transformers==5.19.0)
+  Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in /usr/local/lib/python3.12/site-packages (from sympy>=1.13.3->torch>=2.2->sentence-transformers==6.1.0) (1.3.0)
+Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.12/site-packages (from jinja2->torch>=2.2->sentence-transformers==6.1.0) (3.0.3)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=13.8.0->typer->transformers==5.19.0)
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Downloading transformers-5.19.0-py3-none-any.whl (12.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.6/12.6 MB 72.9 MB/s eta 0:00:00
+Downloading sentence_transformers-6.1.0-py3-none-any.whl (740 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 740.6/740.6 kB 124.6 MB/s eta 0:00:00
+Downloading safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (516 kB)
+Downloading fastapi-0.143.2-py3-none-any.whl (144 kB)
+Downloading uvicorn-0.54.0-py3-none-any.whl (87 kB)
+Downloading annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+Downloading click-8.5.0-py3-none-any.whl (125 kB)
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading huggingface_hub-1.33.0-py3-none-any.whl (846 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 846.4/846.4 kB 102.7 MB/s eta 0:00:00
+Downloading numpy-2.5.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.7/16.7 MB 63.9 MB/s eta 0:00:00
+Downloading opentelemetry_api-1.45.1-py3-none-any.whl (60 kB)
+Downloading packaging-26.3-py3-none-any.whl (129 kB)
+Downloading pydantic-2.14.1-py3-none-any.whl (488 kB)
+Downloading pydantic_core-2.50.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.2/2.2 MB 63.5 MB/s eta 0:00:00
+Downloading pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.9/807.9 kB 74.5 MB/s eta 0:00:00
+Downloading regex-2026.9.29-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (807 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 807.8/807.8 kB 78.5 MB/s eta 0:00:00
+Downloading scikit_learn-1.9.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (9.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.2/9.2 MB 39.5 MB/s eta 0:00:00
+Downloading scipy-1.18.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (35.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 35.3/35.3 MB 7.7 MB/s eta 0:00:00
+Downloading starlette-1.8.0-py3-none-any.whl (79 kB)
+Downloading tokenizers-0.23.3-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.4/3.4 MB 2.4 MB/s eta 0:00:00
+Downloading tqdm-4.70.1-py3-none-any.whl (80 kB)
+Downloading typing_inspection-0.4.4-py3-none-any.whl (14 kB)
+Downloading typer-0.27.3-py3-none-any.whl (123 kB)
+Downloading annotated_types-0.8.0-py3-none-any.whl (13 kB)
+Downloading anyio-4.15.1-py3-none-any.whl (132 kB)
+Downloading hf_xet-1.7.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.2/4.2 MB 2.1 MB/s eta 0:00:00
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+Downloading joblib-1.6.0-py3-none-any.whl (306 kB)
+Downloading narwhals-2.27.1-py3-none-any.whl (483 kB)
+Downloading rich-15.0.0-py3-none-any.whl (310 kB)
+Downloading shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+Downloading threadpoolctl-3.7.0-py3-none-any.whl (26 kB)
+Downloading cloudpickle-3.1.2-py3-none-any.whl (22 kB)
+Downloading idna-3.20-py3-none-any.whl (69 kB)
+Downloading markdown_it_py-4.2.0-py3-none-any.whl (91 kB)
+Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 1.7 MB/s eta 0:00:00
+Downloading certifi-2026.7.22-py3-none-any.whl (136 kB)
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Installing collected packages: typing-inspection, tqdm, threadpoolctl, shellingham, safetensors, regex, pyyaml, pygments, pydantic-core, packaging, opentelemetry-api, numpy, narwhals, mdurl, idna, hf-xet, h11, cloudpickle, click, certifi, annotated-types, annotated-doc, uvicorn, scipy, pydantic, markdown-it-py, joblib, httpcore, anyio, starlette, scikit-learn, rich, httpx, typer, huggingface-hub, fastapi, tokenizers, transformers, sentence-transformers
+Successfully installed annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.15.1 certifi-2026.7.22 click-8.5.0 cloudpickle-3.1.2 fastapi-0.143.2 h11-0.16.0 hf-xet-1.7.0 httpcore-1.0.9 httpx-0.28.1 huggingface-hub-1.33.0 idna-3.20 joblib-1.6.0 markdown-it-py-4.2.0 mdurl-0.1.2 narwhals-2.27.1 numpy-2.5.4 opentelemetry-api-1.45.1 packaging-26.3 pydantic-2.14.1 pydantic-core-2.50.1 pygments-2.21.0 pyyaml-6.0.3 regex-2026.9.29 rich-15.0.0 safetensors-0.8.0 scikit-learn-1.9.1 scipy-1.18.1 sentence-transformers-6.1.0 shellingham-1.5.4 starlette-1.8.0 threadpoolctl-3.7.0 tokenizers-0.23.3 tqdm-4.70.1 transformers-5.19.0 typer-0.27.3 typing-inspection-0.4.4 uvicorn-0.54.0
+[91mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[0m[91m
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+[0mRemoving intermediate container 29273b105af0
+ ---> a5aeeb9d8738
+Step 5/10 : RUN pip install --no-cache-dir pillow torchvision==0.29.1 --index-url ${TORCH_INDEX}         --extra-index-url https://pypi.org/simple
+ ---> Running in 592bec76f65c
+Looking in indexes: https://download.pytorch.org/whl/cu130, https://pypi.org/simple
+Collecting pillow
+  Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (9.1 kB)
+Collecting torchvision==0.29.1
+  Downloading https://download-r2.pytorch.org/whl/cu130/torchvision-0.29.1%2Bcu130-cp312-cp312-manylinux_2_28_x86_64.whl.metadata (5.7 kB)
+Requirement already satisfied: numpy in /usr/local/lib/python3.12/site-packages (from torchvision==0.29.1) (2.5.4)
+Requirement already satisfied: torch>=2.14.0 in /usr/local/lib/python3.12/site-packages (from torchvision==0.29.1) (2.14.1+cu130)
+Requirement already satisfied: filelock in /usr/local/lib/python3.12/site-packages (from torch>=2.14.0->torchvision==0.29.1) (3.32.3)
+Requirement already satisfied: typing-extensions>=4.10.0 in /usr/local/lib/python3.12/site-packages (from torch>=2.14.0->torchvision==0.29.1) (4.16.0)
+Requirement already satisfied: setuptools>=77.0.3 in /usr/local/lib/python3.12/site-packages (from torch>=2.14.0->torchvision==0.29.1) (78.1.0)
+Requirement already satisfied: sympy>=1.13.3 in /usr/local/lib/python3.12/site-packages (from torch>=2.14.0->torchvision==0.29.1) (1.14.0)
+Requirement already satisfied: networkx>=2.5.1 in /usr/local/lib/python3.12/site-packages (from torch>=2.14.0->torchvision==0.29.1) (3.6.1)
+Requirement already satisfied: jinja2 in /usr/local/lib/python3.12/site-packages (from torch>=2.14.0->torchvision==0.29.1) (3.1.6)
+Requirement already satisfied: fsspec>=0.8.5 in /usr/local/lib/python3.12/site-packages (from torch>=2.14.0->torchvision==0.29.1) (2026.7.0)
+Requirement already satisfied: cuda-toolkit==13.0.3 in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.14.0->torchvision==0.29.1) (13.0.3.0)
+Requirement already satisfied: cuda-bindings<14,>=13.0.3 in /usr/local/lib/python3.12/site-packages (from torch>=2.14.0->torchvision==0.29.1) (13.3.1)
+Requirement already satisfied: nvidia-cudnn-cu13==9.24.0.43 in /usr/local/lib/python3.12/site-packages (from torch>=2.14.0->torchvision==0.29.1) (9.24.0.43)
+Requirement already satisfied: nvidia-cusparselt-cu13==0.8.1 in /usr/local/lib/python3.12/site-packages (from torch>=2.14.0->torchvision==0.29.1) (0.8.1)
+Requirement already satisfied: nvidia-nccl-cu13==2.30.7 in /usr/local/lib/python3.12/site-packages (from torch>=2.14.0->torchvision==0.29.1) (2.30.7)
+Requirement already satisfied: nvidia-nvshmem-cu13==3.4.5 in /usr/local/lib/python3.12/site-packages (from torch>=2.14.0->torchvision==0.29.1) (3.4.5)
+Requirement already satisfied: triton~=3.8.0 in /usr/local/lib/python3.12/site-packages (from torch>=2.14.0->torchvision==0.29.1) (3.8.0)
+Requirement already satisfied: nvidia-cublas==13.1.1.3.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.14.0->torchvision==0.29.1) (13.1.1.3)
+Requirement already satisfied: nvidia-cuda-nvrtc==13.0.88.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.14.0->torchvision==0.29.1) (13.0.88)
+Requirement already satisfied: nvidia-cuda-runtime==13.0.96.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.14.0->torchvision==0.29.1) (13.0.96)
+Requirement already satisfied: nvidia-cufft==12.0.0.61.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.14.0->torchvision==0.29.1) (12.0.0.61)
+Requirement already satisfied: nvidia-nvjitlink<14,>=13.0.88 in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.14.0->torchvision==0.29.1) (13.3.33)
+Requirement already satisfied: nvidia-cufile==1.15.1.6.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.14.0->torchvision==0.29.1) (1.15.1.6)
+Requirement already satisfied: nvidia-cuda-cupti==13.0.85.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.14.0->torchvision==0.29.1) (13.0.85)
+Requirement already satisfied: nvidia-curand==10.4.0.35.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.14.0->torchvision==0.29.1) (10.4.0.35)
+Requirement already satisfied: nvidia-cusolver==12.0.4.66.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.14.0->torchvision==0.29.1) (12.0.4.66)
+Requirement already satisfied: nvidia-cusparse==12.6.3.3.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.14.0->torchvision==0.29.1) (12.6.3.3)
+Requirement already satisfied: nvidia-nvtx==13.0.85.* in /usr/local/lib/python3.12/site-packages (from cuda-toolkit[cublas,cudart,cufft,cufile,cupti,curand,cusolver,cusparse,nvjitlink,nvrtc,nvtx]==13.0.3; platform_system == "Linux"->torch>=2.14.0->torchvision==0.29.1) (13.0.85)
+Requirement already satisfied: cuda-pathfinder>=1.4.2 in /usr/local/lib/python3.12/site-packages (from cuda-bindings<14,>=13.0.3->torch>=2.14.0->torchvision==0.29.1) (1.6.0)
+Requirement already satisfied: mpmath<1.4,>=1.1.0 in /usr/local/lib/python3.12/site-packages (from sympy>=1.13.3->torch>=2.14.0->torchvision==0.29.1) (1.3.0)
+Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.12/site-packages (from jinja2->torch>=2.14.0->torchvision==0.29.1) (3.0.3)
+Downloading https://download-r2.pytorch.org/whl/cu130/torchvision-0.29.1%2Bcu130-cp312-cp312-manylinux_2_28_x86_64.whl (7.4 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 7.4/7.4 MB 88.3 MB/s eta 0:00:00
+Downloading pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (6.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.9/6.9 MB 129.6 MB/s eta 0:00:00
+Installing collected packages: pillow, torchvision
+Successfully installed pillow-12.3.0 torchvision-0.29.1+cu130
+[91mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[0m[91m
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+[0mRemoving intermediate container 592bec76f65c
+ ---> 075ab08b163e
+Step 6/10 : COPY models/${MODEL}/ /model/
+ ---> c18745819fcd
+Step 7/10 : COPY app/ /app/
+ ---> ea9e8f836680
+Step 8/10 : WORKDIR /app
+ ---> Running in b2240c4ef242
+Removing intermediate container b2240c4ef242
+ ---> 8e1aa0f34149
+Step 9/10 : ENV MODEL_DIR=/model MODEL_VARIANT=${MODEL} HF_HUB_OFFLINE=1 PYTHONUNBUFFERED=1
+ ---> Running in 134048b064ed
+Removing intermediate container 134048b064ed
+ ---> 752d21fe54ce
+Step 10/10 : CMD exec uvicorn server:app --host 0.0.0.0 --port ${PORT:-8080} --workers 1
+ ---> Running in f25b8ce4e4f7
+Removing intermediate container f25b8ce4e4f7
+ ---> f9c2a38bb39a
+Successfully built f9c2a38bb39a
+Successfully tagged us-central1-docker.pkg.dev/comglitn/embedding-cloudrun/embeddinggemma2-l4-original:latest
+PUSH
+Pushing us-central1-docker.pkg.dev/comglitn/embedding-cloudrun/embeddinggemma2-l4-original:latest
+The push refers to repository [us-central1-docker.pkg.dev/comglitn/embedding-cloudrun/embeddinggemma2-l4-original]
+cc3adc57c946: Preparing
+b74c2198010e: Preparing
+975a99ae934f: Preparing
+79e467f5f1df: Preparing
+dca2a125b490: Preparing
+b361fa3b9794: Preparing
+e1fa2746ad6d: Preparing
+15f1c8eb1ab1: Preparing
+b361fa3b9794: Layer already exists
+15f1c8eb1ab1: Layer already exists
+e1fa2746ad6d: Layer already exists
+dca2a125b490: Layer already exists
+cc3adc57c946: Pushed
+975a99ae934f: Pushed
+b74c2198010e: Pushed
+79e467f5f1df: Pushed
+latest: digest: sha256:465b4edcddf078f3dca07e98684e9c0e540655a0e63bade85cbb8310b4561de3 size: 2006
+DONE
+--------------------------------------------------------------------------------
+ID                                    CREATE_TIME                DURATION  SOURCE                                                                                  IMAGES                                                                                        STATUS
+c4488714-b751-4618-a9dd-8facd51d4126  2026-10-15T17:50:54+00:00  11M6S     gs://comglitn_cloudbuild/source/1792085872.057052-3aa43bef871749f291697d7876ce5c3f.tgz  us-central1-docker.pkg.dev/comglitn/embedding-cloudrun/embeddinggemma2-l4-original (+1 more)  SUCCESS
+Deploying container to Cloud Run service [[1memb-l4-original[m] in project [[1mcomglitn[m] region [[1mus-east4[m]
+Deploying new service...
+Setting IAM Policy..............done
+Creating Revision............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................done
+Routing traffic.....done
+Done.
+Service [[1memb-l4-original[m] revision [[1memb-l4-original-00001-p6m[m] has been deployed and is serving [1m100[m percent of traffic.
+Service URL: [1mhttps://emb-l4-original-1056842563084.us-east4.run.app[m
+https://emb-l4-original-fgasxpwzoq-uk.a.run.app

@@ -1,0 +1,26 @@
+{
+  "variant": "l4-original",
+  "date": "2026-10-15T18:09:21+00:00",
+  "health": {
+    "variant": "original",
+    "device": "cuda:0",
+    "threads": 4,
+    "load_s": 5.8,
+    "max_seq_length": 512,
+    "rss_mib": 1766,
+    "peak_rss_mib": 1766,
+    "gpu": "NVIDIA L4",
+    "gpu_total_mib": 22563,
+    "gpu_allocated_mib": 525,
+    "gpu_peak_allocated_mib": 540,
+    "gpu_peak_reserved_mib": 562
+  },
+  "first_request_s": 0.12375012200027413,
+  "query_client_s_median": 0.16186516100060544,
+  "query_server_s_median": 0.05704426650001437,
+  "query_client_s_max": 0.17752224499963631,
+  "docs_per_request": 32,
+  "doc_batch_client_s_median": 0.38223338700026943,
+  "doc_batch_server_s_median": 0.09716425949997642,
+  "docs_per_s_server": 329.3392052250217
+}

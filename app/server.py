@@ -4,13 +4,14 @@ MODEL_VARIANT=repack    the int8/int4 text-only repack through cpu_load.py (CPU 
 MODEL_VARIANT=repack-w4a16  the int4 (W4A16) text-only repack through cpu_load.py (CPU only)
 MODEL_VARIANT=original  google/embeddinggemma-2, text only: bf16 on a GPU, float32 on CPU
 
-POST /embed    {"texts": [...], "prompt_name": "SearchQuery" | "Document" | null, "dim": 768}
-GET  /health   variant, device, threads, model load seconds (Cloud Run reserves paths ending in "z")
+POST /embed    {"texts": [...], "prompt_name": "SearchQuery" | "Document" | null, "dim": 768, "batch_size": 32}
+GET  /health   variant, device, threads, model load seconds, process memory and, on a GPU, GPU memory (Cloud Run reserves paths ending in "z")
 
 The model loads before uvicorn binds the port, so Cloud Run's startup time includes it.
 """
 
 import os
+import resource
 import time
 
 import torch
@@ -45,6 +46,7 @@ class EmbedRequest(BaseModel):
     texts: list[str] = Field(min_length=1, max_length=256)
     prompt_name: str | None = None
     dim: int = 768
+    batch_size: int = Field(32, ge=1, le=256)  # texts per forward pass
 
 
 @app.post("/embed")
@@ -53,7 +55,7 @@ def embed(r: EmbedRequest):
         return {"error": "dim must be 128, 256, 512 or 768"}
     t = time.perf_counter()
     e = model.encode(r.texts, prompt_name=r.prompt_name, truncate_dim=r.dim,
-                     convert_to_tensor=True, batch_size=32)
+                     convert_to_tensor=True, batch_size=r.batch_size)
     # Normalize in float32: a bf16 model normalizes in bf16, leaving norms up to 0.25% off 1.
     e = torch.nn.functional.normalize(e.float(), dim=-1)
     return {"embeddings": e.cpu().tolist(), "seconds": time.perf_counter() - t}
@@ -61,5 +63,14 @@ def embed(r: EmbedRequest):
 
 @app.get("/health")
 def health():
-    return {"variant": VARIANT, "device": str(model.device), "threads": torch.get_num_threads(),
-            "load_s": round(LOAD_S, 2), "max_seq_length": model.max_seq_length}
+    out = {"variant": VARIANT, "device": str(model.device), "threads": torch.get_num_threads(),
+           "load_s": round(LOAD_S, 2), "max_seq_length": model.max_seq_length,
+           "rss_mib": int(open("/proc/self/status").read().split("VmRSS:")[1].split()[0]) // 1024,
+           "peak_rss_mib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss // 1024}
+    if torch.cuda.is_available():
+        mib = 2 ** 20
+        out.update(gpu=torch.cuda.get_device_name(), gpu_total_mib=torch.cuda.get_device_properties(0).total_memory // mib,
+                   gpu_allocated_mib=torch.cuda.memory_allocated() // mib,
+                   gpu_peak_allocated_mib=torch.cuda.max_memory_allocated() // mib,
+                   gpu_peak_reserved_mib=torch.cuda.max_memory_reserved() // mib)
+    return out

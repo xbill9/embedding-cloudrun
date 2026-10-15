@@ -1,0 +1,11 @@
+int8 repack (models/repack), local, 1 thread, 32 documents encoded at the given batch size, fresh process each, 2026-10-15
+batch  1 doc 135 tokens: peak RSS 1382 MiB
+batch  4 doc 135 tokens: peak RSS 1369 MiB
+batch  8 doc 135 tokens: peak RSS 1345 MiB
+batch 16 doc 135 tokens: peak RSS 1468 MiB
+batch 32 doc 135 tokens: peak RSS 1871 MiB
+batch  1 doc 512 tokens: peak RSS 1385 MiB
+batch  4 doc 512 tokens: peak RSS 1572 MiB
+batch  8 doc 512 tokens: peak RSS 1893 MiB
+batch 16 doc 512 tokens: peak RSS 2356 MiB
+batch 32 doc 512 tokens: peak RSS 3551 MiB

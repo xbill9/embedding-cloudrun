@@ -1,0 +1,20 @@
+L4 USD/hour 1.0465; billed s per isolated burst 265-621, mean 474
+  one isolated burst costs USD 0.1379 (mean), the price of 4,982 documents on the CPU
+L4 best end-to-end 171.8 docs/s -> USD 1.69 per 1M docs while busy; CPU USD 27.67
+
+burst of N documents (one cold L4 cycle vs CPU)
+         N   CPU USD    L4 USD
+       100    0.0028    0.1380
+     1,000    0.0277    0.1396
+    10,000    0.2767    0.1548
+   100,000    2.7670    0.3071
+ 1,000,000   27.6700    1.8302
+break-even burst size 5,307 documents
+
+L4 kept warm all month (traffic at least every ~8 min): USD 764/month, equal to 27.6M documents/month on the CPU
+monthly documents  CPU USD  Jev USD (at 141 tokens/doc)
+       0.1M       2.77       0.59
+       1.0M      27.67       5.92
+      10.0M     276.70      59.20
+      30.0M     830.10     177.61
+     100.0M    2767.00     592.02

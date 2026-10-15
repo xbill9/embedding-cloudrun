@@ -53,6 +53,31 @@ Not tested: loading in vLLM. Transformers' `from_pretrained` with the compressed
 
 ---
 
+#### CPU or L4?
+
+The L4 runs in us-east4 (us-central1 had no quota for an L4 without zonal redundancy; the prices are the same). It loads the float32 model in 4.7–6.4 s, holds 516 MiB of its 22,563 MiB of GPU memory and passes `scripts/test_service.py` against the int8 service (cosine 0.9887–0.9977).
+
+Throughput, `scripts/sweep.py` (`results/sweep-l4-original-2026-10-15T181046Z.json`): the best client rate is 171.8 documents per second (64-document requests, two at a time). Timed inside the server, the GPU does about 328 documents per second at batch 32. Four 256-document requests at once peak at 10.3 GiB of GPU memory.
+
+Five cold starts after 20 minutes idle (`results/coldstart-l4-series/`): first request 17.1–38.9 s, warm request 0.09–0.11 s. Each of those five single-request bursts was billed 265–621 s of L4 time, mean 474 s (`results/billed-l4-series.txt`, Cloud Monitoring), because an instance-billed service keeps charging while idle until it scales to zero.
+
+`python3 scripts/tradeoff.py` (`results/tradeoff-cpu-l4.txt`):
+
+| | CPU int8 (`cpu-repack`) | L4 |
+|---|---|---|
+| USD per 1M documents while busy | 27.67 | 1.69 |
+| one isolated burst of 1,000 documents | USD 0.028 | USD 0.140 |
+| one isolated burst of 100,000 documents | USD 2.77 | USD 0.31 |
+| break-even burst size | 5,307 documents | |
+| kept warm all month | | USD 764, the CPU price of 27.6M documents |
+
+🟢 The 1 vCPU int8 service is the cheaper choice for queries and for bursts under about 5,300 documents, and costs nothing while idle.
+🟢 The L4 is about 16x cheaper per document once a burst is large enough to pay for its idle tail.
+⚠️ The CPU service needs its memory sized to document length: the int8 model alone holds about 1.35 GiB, and a 32-document batch of 512-token documents peaks at 3,551 MiB locally against 1,871 MiB at 135 tokens (`results/cpu-repack-memory.txt`). At 2 GiB, 512-token documents need batches of 8 or fewer.
+⚠️ The L4 client rate is probably limited by the 768-number JSON responses and the network rather than the GPU; untested.
+
+---
+
 #### Prices
 
 From the Cloud Billing Catalog API on 2026-10-10, us-central1 (`scripts/fetch_prices.py` writes `prices.json`):

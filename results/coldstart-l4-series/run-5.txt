@@ -1,0 +1,4 @@
+2026-10-15T19:52:38Z
+{"variant":"original","device":"cuda:0","threads":4,"load_s":6.34,"max_seq_length":512,"rss_mib":1179,"peak_rss_mib":1695,"gpu":"NVIDIA L4","gpu_total_mib":22563,"gpu_allocated_mib":516,"gpu_peak_allocated_mib":516,"gpu_peak_reserved_mib":518}
+http=200 total_s=27.863713
+second http=200 total_s=0.103938

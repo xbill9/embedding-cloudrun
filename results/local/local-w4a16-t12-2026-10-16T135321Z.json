@@ -1,0 +1,21 @@
+{
+  "variant": "local-w4a16-t12",
+  "date": "2026-10-16T13:53:21+00:00",
+  "health": {
+    "variant": "repack-w4a16",
+    "device": "cpu",
+    "threads": 12,
+    "load_s": 1.36,
+    "max_seq_length": 512,
+    "rss_mib": 1572,
+    "peak_rss_mib": 1704
+  },
+  "first_request_s": 0.01422838299185969,
+  "query_client_s_median": 0.17346489900228335,
+  "query_server_s_median": 0.1664801040024031,
+  "query_client_s_max": 0.23509300500154495,
+  "docs_per_request": 32,
+  "doc_batch_client_s_median": 7.670603493010276,
+  "doc_batch_server_s_median": 7.601771171001019,
+  "docs_per_s_server": 4.209545286244937
+}

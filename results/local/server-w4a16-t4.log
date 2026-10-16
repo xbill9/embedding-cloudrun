@@ -1,0 +1,77 @@
+Failed to load /home/xbill/.pyenv/versions/3.14.7/lib/python3.14/site-packages/torchao/_C_cutlass_90a.abi3.so: Could not load this library: /home/xbill/.pyenv/versions/3.14.7/lib/python3.14/site-packages/torchao/_C_cutlass_90a.abi3.so
+Failed to load /home/xbill/.pyenv/versions/3.14.7/lib/python3.14/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so: Could not load this library: /home/xbill/.pyenv/versions/3.14.7/lib/python3.14/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so
+W1016 09:50:34.871000 223419 site-packages/torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1016 09:50:34.891000 223419 site-packages/torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+INFO:     Started server process [223419]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8090 (Press CTRL+C to quit)
+INFO:     127.0.0.1:59228 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59242 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59246 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59254 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54708 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54718 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54722 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54734 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54742 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54758 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54762 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54770 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54782 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54784 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54798 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54800 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54808 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54820 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54834 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54850 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54852 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54854 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54868 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54878 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54884 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54892 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54908 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54912 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54922 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54930 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54942 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54954 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54968 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54974 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54986 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54998 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55006 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55012 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55018 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55034 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55046 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55054 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55066 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55078 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55082 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55098 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55104 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55110 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55126 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55140 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55152 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55156 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55158 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55170 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55180 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:32866 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55048 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55050 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58350 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36608 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36618 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60888 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40702 - "POST /embed HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [223419]
+/home/xbill/.pyenv/versions/3.14.7/lib/python3.14/multiprocessing/resource_tracker.py:475: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown: {'/loky-223419-3ek0_g34'}
+  warnings.warn(

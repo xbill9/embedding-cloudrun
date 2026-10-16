@@ -1,11 +1,11 @@
 More EmbeddingGemma 2 on Cloud Run.
 How small can the service go, and when does an NVIDIA L4 pay for itself?
 
-A 1 vCPU, 2 GiB Cloud Run service with int8 weights is enough. Queries take a median 133 ms, a million documents cost USD 27.67, and it costs nothing while idle.
+A 1 vCPU, 2 GiB Cloud Run service with int8 weights is enough. Queries take a median 133 ms and a million documents cost USD 27.67.
 
-The L4 is about 16x cheaper per document while busy, but it bills its idle time. Each isolated burst was billed about eight minutes of L4 time, roughly USD 0.14, even when the work took seconds.
+Both the CPU service and the L4 scale to zero, and both have cold starts. The difference is billing. The CPU service is billed only while a request runs. The L4 is billed for as long as its instance is up, so each isolated burst was billed about eight minutes of L4 time, roughly USD 0.14, almost all of it after the last request.
 
-So the break-even is a burst of about 5,300 documents. Below that, the CPU service wins. Above it, deploy the L4, run the job and let it scale to zero. An L4 kept warm costs USD 764 a month.
+The L4 is about 16x cheaper per document while busy, so it wins once a burst passes about 5,300 documents. Below that, the CPU service is cheaper. An L4 kept warm costs USD 764 a month.
 
 An int4 repack is 28% smaller, but slower on CPU and needs 3 GiB, because the server runs it in float32.
 

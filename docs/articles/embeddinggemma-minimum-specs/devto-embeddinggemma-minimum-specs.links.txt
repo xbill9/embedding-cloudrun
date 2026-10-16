@@ -1,0 +1,3 @@
+devto-gde = https://dev.to/gde/embeddinggemma-2-on-cloud-run-minimum-specs-and-when-an-nvidia-l4-pays-for-itself-5c1k
+medium = https://xbill999.medium.com/embeddinggemma-2-on-cloud-run-minimum-specs-and-when-an-nvidia-l4-pays-for-itself-6757788a394e
+repo = https://github.com/xbill9/embedding-cloudrun

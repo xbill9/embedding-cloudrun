@@ -1,0 +1,23 @@
+More EmbeddingGemma 2 on Cloud Run.
+How small can the service go, and when does an NVIDIA L4 pay for itself?
+
+A 1 vCPU, 2 GiB Cloud Run service with int8 weights is enough. Queries take a median 133 ms, a million documents cost USD 27.67, and it costs nothing while idle.
+
+The L4 is about 16x cheaper per document while busy, but it bills its idle time. Each isolated burst was billed about eight minutes of L4 time, roughly USD 0.14, even when the work took seconds.
+
+So the break-even is a burst of about 5,300 documents. Below that, the CPU service wins. Above it, deploy the L4, run the job and let it scale to zero. An L4 kept warm costs USD 764 a month.
+
+An int4 repack is 28% smaller, but slower on CPU and needs 3 GiB, because the server runs it in float32.
+
+Write ups are here:
+
+dev.to:
+https://dev.to/gde/embeddinggemma-2-on-cloud-run-minimum-specs-and-when-an-nvidia-l4-pays-for-itself-5c1k
+
+Medium:
+https://xbill999.medium.com/embeddinggemma-2-on-cloud-run-minimum-specs-and-when-an-nvidia-l4-pays-for-itself-6757788a394e
+
+Substack:
+https://xbill9.substack.com/p/embeddinggemma-2-on-cloud-run-minimum
+
+#EmbeddingGemma #Gemma #GoogleCloud #CloudRun #NVIDIA

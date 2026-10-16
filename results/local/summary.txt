@@ -1,0 +1,7 @@
+int8 repack (models/repack), local i7-1360P (4P+8E cores, 16 threads, 15.7 GiB), same server.py and bench.py, 2026-10-16
+Cloud Run cpu-repack (1 vCPU) from results/cpu-repack.json, 2026-10-12T17:31:58+00:00
+where                  threads  query ms  docs/s  RSS MiB  docs/s vs Cloud Run
+Cloud Run 1 vCPU             1     128.2    1.05                          1.00
+laptop                       1      84.3    3.01     1296                 2.87
+laptop                       4      28.1    6.65     1297                 6.34
+laptop                      12     117.1    3.32     1298                 3.17

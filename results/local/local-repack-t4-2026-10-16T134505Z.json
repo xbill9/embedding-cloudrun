@@ -1,0 +1,21 @@
+{
+  "variant": "local-repack-t4",
+  "date": "2026-10-16T13:45:05+00:00",
+  "health": {
+    "variant": "repack",
+    "device": "cpu",
+    "threads": 4,
+    "load_s": 1.5,
+    "max_seq_length": 512,
+    "rss_mib": 1297,
+    "peak_rss_mib": 1418
+  },
+  "first_request_s": 0.015349829001934268,
+  "query_client_s_median": 0.03184630900796037,
+  "query_server_s_median": 0.0281047749958816,
+  "query_client_s_max": 0.10061928800132591,
+  "docs_per_request": 32,
+  "doc_batch_client_s_median": 4.8876717839884805,
+  "doc_batch_server_s_median": 4.814315820003685,
+  "docs_per_s_server": 6.646842707542919
+}

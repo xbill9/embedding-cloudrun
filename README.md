@@ -76,6 +76,7 @@ Five cold starts after 20 minutes idle (`results/coldstart-l4-series/`): first r
 🟢 The 1 vCPU int8 service is the cheaper choice for queries and for bursts under about 5,300 documents, and costs nothing while idle.
 🟢 The L4 is about 16x cheaper per document once a burst is large enough to pay for its idle tail.
 ⚠️ The CPU service needs its memory sized to document length: the int8 model alone holds about 1.35 GiB, and a 32-document batch of 512-token documents peaks at 3,551 MiB locally against 1,871 MiB at 135 tokens (`results/cpu-repack-memory.txt`). At 2 GiB, 512-token documents need batches of 8 or fewer.
+⚠️ For reference, the same int8 server on a local i7-1360P laptop (`results/local/summary.txt`): 1 thread, 84 ms per query and 3.0 documents/s; 4 threads, 28 ms and 6.7 documents/s; 12 threads, 117 ms and 3.3 documents/s. RSS 1,296–1,298 MiB. A Cloud Run vCPU does 1.05 documents/s.
 ⚠️ The L4 client rate is probably limited by the 768-number JSON responses and the network rather than the GPU; untested.
 
 ---

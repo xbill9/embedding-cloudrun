@@ -1,0 +1,79 @@
+Failed to load /home/xbill/.pyenv/versions/3.14.7/lib/python3.14/site-packages/torchao/_C_cutlass_90a.abi3.so: Could not load this library: /home/xbill/.pyenv/versions/3.14.7/lib/python3.14/site-packages/torchao/_C_cutlass_90a.abi3.so
+Failed to load /home/xbill/.pyenv/versions/3.14.7/lib/python3.14/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so: Could not load this library: /home/xbill/.pyenv/versions/3.14.7/lib/python3.14/site-packages/torchao/_C_mxfp8.cpython-310-x86_64-linux-gnu.so
+W1016 09:44:14.873000 220682 site-packages/torch/utils/_pytree.py:630] <enum 'KernelPreference'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+W1016 09:44:14.892000 220682 site-packages/torch/utils/_pytree.py:630] <enum 'ScaleCalculationMode'> is an Enum subclass and is now natively supported by torch.compile as an opaque value type. Calling register_constant() on Enum subclasses is deprecated and will be an error in a future release.
+/home/xbill/embedding-cloudrun/app/cpu_load.py:61: UserWarning: torch.quantize_per_tensor, torch.quantize_per_channel and other quantized tensor creation functions that produce tensors with dtype torch.quint8, torch.qint8, and torch.qint32 are deprecated and will be removed in a future PyTorch release. Please see https://github.com/pytorch/pytorch/issues/184982 for more information. (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/quantized/Quantizer.cpp:111.)
+  w = torch._make_per_channel_quantized_tensor(
+INFO:     Started server process [220682]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8090 (Press CTRL+C to quit)
+INFO:     127.0.0.1:35604 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35614 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35618 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35622 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35624 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35638 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35650 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35664 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35674 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35676 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35678 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35690 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35692 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35694 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35708 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35718 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35724 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35734 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35746 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35760 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35764 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35778 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35788 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35796 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35810 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35822 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35834 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35842 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35854 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35870 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35876 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35886 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35902 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35904 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35906 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35914 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35924 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35934 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35942 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35950 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35952 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35962 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35964 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35972 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35986 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36002 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36018 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36032 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36034 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36042 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36046 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36060 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36062 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36072 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36074 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36082 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41862 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41872 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47772 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47774 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36204 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36218 - "POST /embed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34056 - "POST /embed HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [220682]
+/home/xbill/.pyenv/versions/3.14.7/lib/python3.14/multiprocessing/resource_tracker.py:475: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown: {'/loky-220682-0r3pi_5a'}
+  warnings.warn(
